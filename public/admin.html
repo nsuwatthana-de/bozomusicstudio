@@ -40,7 +40,7 @@ details{margin-top:24px}summary{cursor:pointer;color:var(--mute);font-size:14px}
 <label for="x_mapQuery">ชื่อสถานที่/ที่อยู่สำหรับปุ่มแผนที่ (ค้นหาใน Google Maps)</label><input type="text" id="x_mapQuery">
 <label for="x_soonTitle">กล่อง COMING SOON · หัวข้อ</label><input type="text" id="x_soonTitle">
 <label for="x_soonText">กล่อง COMING SOON · ข้อความ</label><textarea id="x_soonText" rows="3"></textarea>
-<label for="x_soonList">สินค้าที่กำลังจะมีเร็วๆ นี้ (พิมพ์ 1 รายการต่อ 1 บรรทัด)</label><textarea id="x_soonList" rows="4" placeholder="เช่น&#10;กีตาร์โปร่ง&#10;เบสไฟฟ้า&#10;คีย์บอร์ด"></textarea>
+<label>สินค้าที่กำลังจะมีเร็วๆ นี้ (ใส่รูปได้)</label><div id="sl"></div><button type="button" class="btn y sm" id="sadd" style="margin-top:8px">+ เพิ่มรายการ</button>
 <label style="display:flex;gap:8px;align-items:center;margin-top:10px"><input type="checkbox" id="x_soonOff"> ซ่อนกล่อง COMING SOON</label>
 <label for="su">ลิงก์เว็บรับทำเพลง (เว้นว่าง = ซ่อนปุ่ม)</label><input type="url" id="su" placeholder="https://...">
 <label for="lo">LINE Official Account (มี @ นำหน้า)</label><input type="text" id="lo">
@@ -93,12 +93,12 @@ function mv(i,j){if(j<0||j>=S.products.length)return;var t=S.products.splice(i,1
 $("pl").addEventListener("click",function(e){var b=e.target.closest("button[data-k]");if(!b)return;var card=b.closest(".card"),i=+card.getAttribute("data-i"),k=b.getAttribute("data-k"),x=S.products[i];
  if(k=="del"){var inSets=S.products.filter(function(p){return p.set&&p.set.some(function(c){return c.id===x.id})}).length;if(confirm("ลบ \""+x.n+"\" ?"+(inSets?"\n(สินค้านี้อยู่ในเซ็ต "+inSets+" รายการ จะถูกเอาออกจากเซ็ตด้วย)":""))){S.products.splice(i,1);S.products.forEach(function(p){if(p.set)p.set=p.set.filter(function(c){return c.id!==x.id})});save();drawP()}}
  else if(k=="noimg"){delete x.img;save();drawP()}
- else if(k=="img"){pick=i;$("fi").value="";$("fi").click()}
+ else if(k=="img"){sp=-1;pick=i;$("fi").value="";$("fi").click()}
  else if(k=="up")mv(i,i-1);else if(k=="down")mv(i,i+1);else if(k=="top")mv(i,0);
  else if(k=="inc"||k=="dec"){x.s=Math.max(0,(+x.s||0)+(k=="inc"?1:-1));card.querySelector("input[data-k=s]").value=x.s;save();upd()}
  else if(k=="addc"){var first=S.products.filter(function(p){return!p.set})[0];if(!first){toast("ยังไม่มีสินค้าให้ใส่ในเซ็ต");return}x.set.push({id:first.id,q:1});save();drawP()}
  else if(k=="rmc"){x.set.splice(+b.closest(".cmp").getAttribute("data-j"),1);save();drawP()}});
-$("fi").onchange=function(){var f=this.files[0];if(!f||pick<0)return;var r=new FileReader();r.onload=function(){var im=new Image();im.onload=function(){var m=720,sc=Math.min(1,m/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*sc);c.height=Math.round(im.height*sc);var g=c.getContext("2d");g.fillStyle="#fff";g.fillRect(0,0,c.width,c.height);g.drawImage(im,0,0,c.width,c.height);var pd0=S.products[pick].id;toast("กำลังอัปโหลดรูป…");up(c.toDataURL("image/jpeg",.8),function(u){var q=byId(pd0);if(q){q.img=u;save();drawP();toast("ใส่รูปแล้ว")}})};im.onerror=function(){toast("อ่านรูปนี้ไม่ได้ ลองรูปอื่น")};im.src=r.result};r.readAsDataURL(f)};
+$("fi").onchange=function(){var f=this.files[0];if(!f||(pick<0&&sp<0))return;var tgt=sp>=0?sg()[sp]:S.products[pick];var r=new FileReader();r.onload=function(){var im=new Image();im.onload=function(){var m=720,sc=Math.min(1,m/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*sc);c.height=Math.round(im.height*sc);var g=c.getContext("2d");g.fillStyle="#fff";g.fillRect(0,0,c.width,c.height);g.drawImage(im,0,0,c.width,c.height);var pd0=tgt.id,isS=sp>=0;toast("กำลังอัปโหลดรูป…");up(c.toDataURL("image/jpeg",.8),function(u){var q=isS?sg().filter(function(z){return z.id===pd0})[0]:byId(pd0);if(q){q.img=u;save();isS?drawS():drawP();toast("ใส่รูปแล้ว")}})};im.onerror=function(){toast("อ่านรูปนี้ไม่ได้ ลองรูปอื่น")};im.src=r.result};r.readAsDataURL(f)};
 $("add").onclick=function(){S.products.unshift({id:gid(),n:"สินค้าใหม่",p:0,s:0});save();drawP();var f=document.querySelector("#pl input[data-k=n]");if(f){f.focus();f.select()}};
 $("addset").onclick=function(){var f=S.products.filter(function(p){return!p.set})[0];S.products.unshift({id:gid(),n:"เซ็ตใหม่",p:0,set:f?[{id:f.id,q:1}]:[]});save();drawP();var g=document.querySelector("#pl input[data-k=n]");if(g){g.focus();g.select()}};
 $("so").onchange=function(){var v=this.value;if(!v)return;var c=function(a,b){return String(a.n).localeCompare(String(b.n),"th")};var st=function(x){return x.set?setStock(x):(+x.s||0)};S.products.sort(v=="n"?c:v=="pa"?function(a,b){return a.p-b.p}:v=="pd"?function(a,b){return b.p-a.p}:v=="sd"?function(a,b){return st(b)-st(a)}:function(a,b){return(a.set?0:1)-(b.set?0:1)});this.value="";save();drawP();toast("เรียงสินค้าแล้ว")};
@@ -111,10 +111,21 @@ $("ar").value=S.delivery.areas.join(", ");drawR(S.delivery.areas);
 function syncR(){var l=parseAreas($("ar").value),cur=[].map.call(document.querySelectorAll("#rt .crow"),function(r){return r.getAttribute("data-a")});if(l.join("\n")==cur.join("\n"))return;drawR(l,readR());var d=collectR();if(d){S.delivery={areas:d.areas,rules:d.rules};save()}}
 var tm;$("ar").addEventListener("input",function(){clearTimeout(tm);tm=setTimeout(syncR,450)});$("ar").onchange=syncR;
 $("rt").addEventListener("input",function(){var d=collectR();if(d){S.delivery={areas:d.areas,rules:d.rules};save()}});
-var DEF={shopName:"Bozo Music Studio",headline:"อุปกรณ์ดนตรีส่งถึงมือคุณ",checkinText:"รับของเองที่ร้านได้",mapQuery:"โรงเรียนท่าบ่อ หนองคาย",soonTitle:"คอลเลกชันของเรากำลังเติบโต",soonText:"วันนี้เราเริ่มจากอุปกรณ์ที่นักดนตรีใช้ทุกวัน อีกไม่นานจะมีกีตาร์ เบส คีย์บอร์ด และอุปกรณ์อีกมากมายให้คุณได้เลือก",soonList:""};
+var DEF={shopName:"Bozo Music Studio",headline:"อุปกรณ์ดนตรีส่งถึงมือคุณ",checkinText:"รับของเองที่ร้านได้",mapQuery:"โรงเรียนท่าบ่อ หนองคาย",soonTitle:"คอลเลกชันของเรากำลังเติบโต",soonText:"วันนี้เราเริ่มจากอุปกรณ์ที่นักดนตรีใช้ทุกวัน อีกไม่นานจะมีกีตาร์ เบส คีย์บอร์ด และอุปกรณ์อีกมากมายให้คุณได้เลือก"};
 var TK=Object.keys(DEF);
 function fillX(){S.text=S.text||{};TK.forEach(function(k){$("x_"+k).value=S.text[k]||DEF[k]});$("x_soonOff").checked=!!S.text.soonOff;$("su").value=S.studioUrl||"";$("lo").value=S.lineOA||"";$("pp").value=S.promptpay||"";$("qrp").src=S.qrImg||"assets/promptpay-qr.jpg";$("lgp").src=S.logoImg||"assets/logo.jpg"}
 fillX();
+var sp=-1;
+function sg(){return(S.soon=S.soon||[])}
+if(!S.soon&&S.text&&S.text.soonList){S.soon=String(S.text.soonList).split(/\n/).map(function(v){return v.trim()}).filter(Boolean).map(function(v){return{id:gid(),n:v}});delete S.text.soonList}
+function drawS(){$("sl").innerHTML=sg().map(function(x,i){return'<div class="card" data-s="'+i+'"><div class="pr"><button type="button" class="th" data-k="simg" aria-label="เปลี่ยนรูป">'+(x.img?'<img src="'+esc(x.img)+'" alt="">':'+ รูป')+'</button><div><input type="text" data-k="sn" placeholder="ชื่อสินค้า เช่น กีตาร์โปร่ง" value="'+esc(x.n||"")+'"></div></div><div class="acts"><button type="button" class="btn o sq" data-k="sup" '+(i?'':'disabled')+'>↑</button><button type="button" class="btn o sq" data-k="sdn" '+(i<sg().length-1?'':'disabled')+'>↓</button><span style="flex:1"></span>'+(x.img?'<button type="button" class="btn d" data-k="snoimg">ลบรูป</button>':'')+'<button type="button" class="btn d" data-k="sdel">ลบ</button></div></div>'}).join("")}
+$("sadd").onclick=function(){sg().push({id:gid(),n:""});save();drawS();var f=document.querySelectorAll("#sl input");if(f.length)f[f.length-1].focus()};
+$("sl").addEventListener("input",function(e){var c=e.target.closest("[data-s]");if(!c||e.target.getAttribute("data-k")!="sn")return;sg()[+c.dataset.s].n=e.target.value;save()});
+$("sl").addEventListener("click",function(e){var b=e.target.closest("button[data-k]");if(!b)return;var i=+b.closest("[data-s]").dataset.s,k=b.getAttribute("data-k"),a=sg();
+ if(k=="simg"){sp=i;pick=-1;$("fi").value="";$("fi").click();return}
+ if(k=="snoimg")delete a[i].img;else if(k=="sdel")a.splice(i,1);else if(k=="sup"&&i>0)a.splice(i-1,0,a.splice(i,1)[0]);else if(k=="sdn"&&i<a.length-1)a.splice(i+1,0,a.splice(i,1)[0]);
+ save();drawS()});
+drawS();
 TK.forEach(function(k){$("x_"+k).addEventListener("input",function(){S.text=S.text||{};var v=this.value.trim();if(!v||v==DEF[k])delete S.text[k];else S.text[k]=v;save()})});
 $("x_soonOff").onchange=function(){S.text=S.text||{};if(this.checked)S.text.soonOff=true;else delete S.text.soonOff;save()};
 $("su").oninput=function(){S.studioUrl=this.value.trim();save()};$("lo").oninput=function(){S.lineOA=this.value.trim();save()};$("pp").oninput=function(){S.promptpay=this.value.trim();save()};

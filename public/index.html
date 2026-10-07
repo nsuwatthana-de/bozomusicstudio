@@ -132,6 +132,16 @@ function st(x){if(!x.set)return x.s;var m=Infinity;x.set.forEach(function(c){var
 function inc(x){return x.set?x.set.map(function(c){var p=pid(c.id);return p?esc(p.n)+(c.q>1?" ×"+c.q:""):""}).filter(Boolean).join(" + "):""}
 var cart={},pos="",$=function(i){return document.getElementById(i)},B=function(n){return"฿"+n.toLocaleString("th-TH")};
 function esc(t){return String(t).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function orderDlg(txt){var d=document.getElementById("odlg");if(d)d.remove();d=document.createElement("div");d.id="odlg";d.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:20;display:flex;align-items:center;justify-content:center;padding:16px";
+var b=document.createElement("div");b.style.cssText="background:var(--bg);color:var(--ink);border-radius:14px;max-width:460px;width:100%;max-height:90vh;overflow:auto;padding:18px";
+var h=document.createElement("h3");h.textContent="ส่งออเดอร์ให้ร้านทาง LINE";h.style.cssText="margin:0 0 6px;font:600 18px Prompt,sans-serif";
+var p=document.createElement("p");p.textContent="เครื่องนี้ไม่ใช่มือถือ จึงเปิด LINE อัตโนมัติไม่ได้ ให้คัดลอกข้อความออเดอร์ด้านล่าง แล้ววางในแชท LINE ร้าน (หรือเปิดหน้านี้บนมือถือที่มี LINE)";p.style.cssText="margin:0 0 10px;color:var(--mute);font-size:14px";
+var t=document.createElement("textarea");t.readOnly=true;t.value=txt;t.rows=10;t.style.cssText="width:100%;font:inherit;font-size:14px;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)";
+var c=document.createElement("button");c.type="button";c.className="btn";c.textContent="คัดลอกข้อความออเดอร์";c.style.marginTop="10px";
+c.onclick=function(){t.select();var ok=false;try{ok=document.execCommand("copy")}catch(e){}try{navigator.clipboard.writeText(txt);ok=true}catch(e){}toast(ok?"คัดลอกแล้ว วางในแชท LINE ร้านได้เลย":"กด Ctrl+C เพื่อคัดลอก")};
+var a=document.createElement("a");a.className="btn g";a.target="_blank";a.rel="noopener";a.href="https://line.me/R/ti/p/"+OA;a.textContent="เปิดแชท LINE ร้าน";a.style.marginTop="8px";
+var x=document.createElement("button");x.type="button";x.className="btn o";x.textContent="ปิด";x.style.marginTop="8px";x.onclick=function(){d.remove()};
+b.append(h,p,t,c,a,x);d.appendChild(b);d.onclick=function(e){if(e.target===d)d.remove()};document.body.appendChild(d)}
 function toast(m,ms){var t=$("toast");t.textContent=m;t.classList.add("on");clearTimeout(toast.h);toast.h=setTimeout(function(){t.classList.remove("on")},ms||2600)}
 function thumb(x){return x.img?'<img class="ph" loading="lazy" src="'+esc(x.img)+'" alt="'+esc(x.n)+'">':'<div class="ph"></div>'}
 function chk(id,ok,msg){$(id).classList.toggle("bad",!ok);$("e_"+id).textContent=ok?"":msg;return ok}
@@ -173,6 +183,7 @@ try{fetch("/api/orders",{method:"POST",headers:{"content-type":"application/json
 cart={};draw();
 var txt=L.join("\n"),url="https://line.me/R/oaMessage/"+OA+"/?"+encodeURIComponent(txt);
 try{navigator.clipboard&&navigator.clipboard.writeText(txt).catch(function(){})}catch(e){}
+if(!/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){orderDlg(txt);return}
 var w=null;try{w=window.open(url,"_blank")}catch(e){}if(!w)location.href=url;
 toast("เปิด LINE แล้ว กดส่งข้อความเพื่อยืนยันออเดอร์ (ถ้า LINE ไม่เด้ง ข้อความออเดอร์ถูกคัดลอกไว้แล้ว เปิดแชท LINE ร้านแล้ววางได้เลย)",7000)};
 $("sgo").onclick=function(){var v=$("sg").value.trim();if(!chk("sg",v.length>=3,"พิมพ์สินค้าที่อยากให้มีก่อน"))return;

@@ -40,6 +40,7 @@ details{margin-top:24px}summary{cursor:pointer;color:var(--mute);font-size:14px}
 <label for="x_mapQuery">ชื่อสถานที่/ที่อยู่สำหรับปุ่มแผนที่ (ค้นหาใน Google Maps)</label><input type="text" id="x_mapQuery">
 <label for="x_soonTitle">กล่อง COMING SOON · หัวข้อ</label><input type="text" id="x_soonTitle">
 <label for="x_soonText">กล่อง COMING SOON · ข้อความ</label><textarea id="x_soonText" rows="3"></textarea>
+<label for="x_soonList">สินค้าที่กำลังจะมีเร็วๆ นี้ (พิมพ์ 1 รายการต่อ 1 บรรทัด)</label><textarea id="x_soonList" rows="4" placeholder="เช่น&#10;กีตาร์โปร่ง&#10;เบสไฟฟ้า&#10;คีย์บอร์ด"></textarea>
 <label style="display:flex;gap:8px;align-items:center;margin-top:10px"><input type="checkbox" id="x_soonOff"> ซ่อนกล่อง COMING SOON</label>
 <label for="su">ลิงก์เว็บรับทำเพลง (เว้นว่าง = ซ่อนปุ่ม)</label><input type="url" id="su" placeholder="https://...">
 <label for="lo">LINE Official Account (มี @ นำหน้า)</label><input type="text" id="lo">
@@ -110,7 +111,7 @@ $("ar").value=S.delivery.areas.join(", ");drawR(S.delivery.areas);
 function syncR(){var l=parseAreas($("ar").value),cur=[].map.call(document.querySelectorAll("#rt .crow"),function(r){return r.getAttribute("data-a")});if(l.join("\n")==cur.join("\n"))return;drawR(l,readR());var d=collectR();if(d){S.delivery={areas:d.areas,rules:d.rules};save()}}
 var tm;$("ar").addEventListener("input",function(){clearTimeout(tm);tm=setTimeout(syncR,450)});$("ar").onchange=syncR;
 $("rt").addEventListener("input",function(){var d=collectR();if(d){S.delivery={areas:d.areas,rules:d.rules};save()}});
-var DEF={shopName:"Bozo Music Studio",headline:"อุปกรณ์ดนตรีส่งถึงมือคุณ",checkinText:"รับของเองที่ร้านได้",mapQuery:"โรงเรียนท่าบ่อ หนองคาย",soonTitle:"คอลเลกชันของเรากำลังเติบโต",soonText:"วันนี้เราเริ่มจากอุปกรณ์ที่นักดนตรีใช้ทุกวัน อีกไม่นานจะมีกีตาร์ เบส คีย์บอร์ด และอุปกรณ์อีกมากมายให้คุณได้เลือก"};
+var DEF={shopName:"Bozo Music Studio",headline:"อุปกรณ์ดนตรีส่งถึงมือคุณ",checkinText:"รับของเองที่ร้านได้",mapQuery:"โรงเรียนท่าบ่อ หนองคาย",soonTitle:"คอลเลกชันของเรากำลังเติบโต",soonText:"วันนี้เราเริ่มจากอุปกรณ์ที่นักดนตรีใช้ทุกวัน อีกไม่นานจะมีกีตาร์ เบส คีย์บอร์ด และอุปกรณ์อีกมากมายให้คุณได้เลือก",soonList:""};
 var TK=Object.keys(DEF);
 function fillX(){S.text=S.text||{};TK.forEach(function(k){$("x_"+k).value=S.text[k]||DEF[k]});$("x_soonOff").checked=!!S.text.soonOff;$("su").value=S.studioUrl||"";$("lo").value=S.lineOA||"";$("pp").value=S.promptpay||"";$("qrp").src=S.qrImg||"assets/promptpay-qr.jpg";$("lgp").src=S.logoImg||"assets/logo.jpg"}
 fillX();

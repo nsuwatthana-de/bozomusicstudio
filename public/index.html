@@ -71,7 +71,7 @@ footer{background:var(--navy);border-top:3px solid var(--yel);padding:22px 0;fon
 [hidden]{display:none!important}
 
 nav a{padding:6px 7px;font-size:14px;font-weight:600;color:var(--mute);text-decoration:none;white-space:nowrap}nav a:hover{color:var(--ink)}
-.soon{margin:10px 0 0;padding:18px 18px 18px 20px;border:1px dashed var(--line);border-left:4px solid var(--yel);border-radius:12px}.soon .tag{display:inline-block;font:600 11px Prompt,sans-serif;letter-spacing:.18em;color:var(--mute);margin-bottom:6px}.soon h3{font:500 17px Prompt,sans-serif;margin:0 0 4px}.soon p{margin:0;color:var(--mute);font-size:15px}
+.soon{margin:10px 0 0;padding:18px 18px 18px 20px;border:1px dashed var(--line);border-left:4px solid var(--yel);border-radius:12px}.soon .tag{display:inline-block;font:600 11px Prompt,sans-serif;letter-spacing:.18em;color:var(--mute);margin-bottom:6px}.soon h3{font:500 17px Prompt,sans-serif;margin:0 0 4px}.soon p{margin:0;color:var(--mute);font-size:15px}.soon ul{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}.soon li{border:1px solid var(--yel);border-radius:999px;padding:3px 12px;font-size:14px}
 .cfgbox{border:1px solid var(--line);border-radius:12px;padding:4px 16px 16px;margin-top:8px}
 .qrimg{padding:0}.pt{font:500 16px Prompt,sans-serif;margin:24px 0 4px}.cp{margin-top:8px}
 </style>
@@ -176,7 +176,7 @@ $("sgo").onclick=function(){var v=$("sg").value.trim();if(!chk("sg",v.length>=3,
 window.open("https://line.me/R/oaMessage/"+OA+"/?"+encodeURIComponent("เสนอสินค้า "+SN+"\nอยากให้มี: "+v),"_blank");$("sg").value="";toast("เปิด LINE แล้ว กดส่งข้อความเพื่อส่งให้ร้าน")};
 $("add").href="https://line.me/R/ti/p/"+OA;
 $("map").href="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(T.mapQuery||"โรงเรียนท่าบ่อ หนองคาย");
-(function(){var h=document.querySelector(".hero h1");if(T.headline)h.textContent=T.headline;var sn=document.querySelector(".soon");if(sn){if(T.soonTitle)sn.querySelector("h3").textContent=T.soonTitle;if(T.soonText)sn.querySelector("p").textContent=T.soonText;if(T.soonOff)sn.hidden=true}
+(function(){var h=document.querySelector(".hero h1");if(T.headline)h.textContent=T.headline;var sn=document.querySelector(".soon");if(sn){if(T.soonTitle)sn.querySelector("h3").textContent=T.soonTitle;if(T.soonText)sn.querySelector("p").textContent=T.soonText;if(T.soonList){var ul=document.createElement("ul");String(T.soonList).split(/\n/).slice(0,20).forEach(function(v){v=v.trim().slice(0,60);if(v){var li=document.createElement("li");li.textContent=v;ul.appendChild(li)}});if(ul.children.length)sn.appendChild(ul)}if(T.soonOff)sn.hidden=true}
 if(T.checkinText)$("cin").textContent=T.checkinText;
 if(T.shopName){var p=T.shopName.trim().split(/\s+/),lg=document.querySelector(".logo span");lg.innerHTML=esc(p[0])+(p.length>1?"<small>"+esc(p.slice(1).join(" "))+"</small>":"");document.title=T.shopName+" | "+(T.headline||"อุปกรณ์ดนตรีส่งถึงมือคุณ");var ft=document.querySelector("footer .w");ft.lastChild.textContent=T.shopName}
 if(S.qrImg)$("qr").src=S.qrImg;if(S.logoImg){document.querySelector(".mk").src=S.logoImg;document.querySelector("footer .lg").src=S.logoImg}})();

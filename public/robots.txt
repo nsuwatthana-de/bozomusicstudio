@@ -3,3 +3,4 @@ Allow: /
 Disallow: /admin.html
 Disallow: /admin
 Disallow: /api/
+Disallow: /report.html

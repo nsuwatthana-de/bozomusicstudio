@@ -168,6 +168,8 @@ if(!(a&&b&&c)){toast("ตรวจสอบข้อมูลที่ขึ้�
 var L=["สั่งซื้อ "+SN,"ชื่อ: "+nm,"โทร: "+phn,"อำเภอ: "+$("ar").value,"สถานที่รับของ: "+pl];if(pos)L.push("พิกัด: "+pos);L.push("--");
 P.forEach(function(x,i){var q=cart[i]||0;if(q){L.push(x.n+" ×"+q+" = "+B(q*x.p)+(st(x)>0?"":" (พรีออเดอร์)")+(x.set?" [เซ็ต: "+inc(x).replace(/&amp;/g,"&")+"]":""));if(st(x)>0){if(x.set)x.set.forEach(function(c){var p=pid(c.id);if(p)p.s=Math.max(0,p.s-q*c.q)});else x.s-=q}}});
 L.push("--","ค่าสินค้า "+B(t.sub),"ค่าส่ง "+(t.del?B(t.del):"ฟรี"),"ยอดสุทธิ "+B(t.tot),"ชำระ: พร้อมเพย์ (จ่ายก่อน)");
+var oi=[];P.forEach(function(x,i){if(cart[i])oi.push({id:x.id,q:cart[i]})});
+try{fetch("/api/orders",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({action:"create",name:nm,phone:phn,area:$("ar").value,place:pl,items:oi}),keepalive:true}).catch(function(){})}catch(e){}
 cart={};draw();
 window.open("https://line.me/R/oaMessage/"+OA+"/?"+encodeURIComponent(L.join("\n")),"_blank");toast("เปิด LINE แล้ว กดส่งข้อความเพื่อยืนยันออเดอร์")};
 $("sgo").onclick=function(){var v=$("sg").value.trim();if(!chk("sg",v.length>=3,"พิมพ์สินค้าที่อยากให้มีก่อน"))return;

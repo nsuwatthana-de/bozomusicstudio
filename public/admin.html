@@ -67,18 +67,22 @@ function ensureIds(){S.products.forEach(function(x){if(!x.id)x.id=gid()})}
 function byId(id){for(var i=0;i<S.products.length;i++)if(S.products[i].id===id)return S.products[i]}
 function setStock(x){var m=Infinity;(x.set||[]).forEach(function(c){var p=byId(c.id);m=Math.min(m,p?Math.floor((+p.s||0)/Math.max(1,c.q||1)):0)});return m===Infinity?0:m}
 function setSum(x){var t=0;(x.set||[]).forEach(function(c){var p=byId(c.id);if(p)t+=(+p.p||0)*(c.q||1)});return t}
-function hint(x){var t=setSum(x),d=t-(+x.p||0);return"ราคาปกติรวม ฿"+t.toLocaleString("th-TH")+(d>0?" · ลูกค้าประหยัด ฿"+d.toLocaleString("th-TH"):d<0?" · ราคาเซ็ตสูงกว่าซื้อแยก":"")}
+function fm(n){return"฿"+n.toLocaleString("th-TH")}
+function costOf(x){if(!x.set)return+x.c||0;var t=0;(x.set||[]).forEach(function(c){var p=byId(c.id);if(p)t+=(+p.c||0)*(c.q||1)});return t}
+function profit(x){var c=costOf(x);if(!c)return x.set?"":"ใส่ราคาต้นทุนเพื่อดูกำไร";var g=(+x.p||0)-c;return"กำไรต่อ"+(x.set?"เซ็ต":"ชิ้น")+" "+fm(g)+" ("+(+x.p?Math.round(g/x.p*100):0)+"%)"+(x.set?" · ต้นทุนรวม "+fm(c):"")}
+function hint(x){var t=setSum(x),d=t-(+x.p||0);return"ราคาปกติรวม ฿"+t.toLocaleString("th-TH")+(d>0?" · ลูกค้าประหยัด ฿"+d.toLocaleString("th-TH"):d<0?" · ราคาเซ็ตสูงกว่าซื้อแยก":"")+(profit(x)?" · "+profit(x):"")}
 function cardHtml(x,i){var n=S.products.length,isSet=!!x.set;
  var h='<div class="card'+(isSet?' setc':'')+'" data-i="'+i+'"><div class="pr"><button type="button" class="th" data-k="img" aria-label="เปลี่ยนรูป">'+(x.img?'<img src="'+esc(x.img)+'" alt="">':'+ รูป')+'</button><div><label>'+(isSet?'<span class="tg">เซ็ต</span> ':'')+'ชื่อ'+(isSet?'เซ็ต':'สินค้า')+'</label><input type="text" data-k="n" value="'+esc(x.n)+'"></div></div>';
  h+='<div class="row2"><div><label>ราคา'+(isSet?'เซ็ต':'')+' (฿)</label><input type="tel" inputmode="numeric" data-k="p" value="'+(+x.p||0)+'"></div><div><label>สต็อก'+(isSet?' (คำนวณอัตโนมัติ)':'')+'</label>';
  if(isSet)h+='<div class="stk"><b class="sst">'+setStock(x)+'</b> ชุด</div>';
  else h+='<div class="stp"><button type="button" class="btn o sq" data-k="dec" aria-label="ลดสต็อก">−</button><input type="tel" inputmode="numeric" data-k="s" value="'+(+x.s||0)+'"><button type="button" class="btn o sq" data-k="inc" aria-label="เพิ่มสต็อก">+</button></div>';
  h+='</div></div>';
+ if(!isSet)h+='<div class="row2" style="margin-top:8px"><div><label>ราคาต้นทุน (฿) <span class="note">ลูกค้าไม่เห็น</span></label><input type="tel" inputmode="numeric" data-k="c" value="'+(+x.c||0)+'"></div><div><label>กำไร</label><div class="stk note pf">'+profit(x)+'</div></div></div>';
  if(isSet){h+='<label>สินค้าในเซ็ต</label>';(x.set||[]).forEach(function(c,j){h+='<div class="cmp" data-j="'+j+'"><select data-c="id">'+S.products.filter(function(p){return!p.set}).map(function(p){return'<option value="'+esc(p.id)+'"'+(p.id===c.id?' selected':'')+'>'+esc(p.n||"(ไม่มีชื่อ)")+'</option>'}).join("")+'</select><span>×</span><input type="tel" inputmode="numeric" data-c="q" value="'+(c.q||1)+'"><button type="button" class="btn d" data-k="rmc" aria-label="เอาออกจากเซ็ต">✕</button></div>'});
   h+='<button type="button" class="btn o sm" data-k="addc" style="margin-top:8px">+ เพิ่มสินค้าในเซ็ต</button><div class="note sav" style="margin-top:6px">'+hint(x)+'</div>'}
  h+='<div class="acts"><button type="button" class="btn o sq" data-k="top" '+(i?'':'disabled')+' aria-label="ขึ้นบนสุด">⤒</button><button type="button" class="btn o sq" data-k="up" '+(i?'':'disabled')+' aria-label="เลื่อนขึ้น">↑</button><button type="button" class="btn o sq" data-k="down" '+(i<n-1?'':'disabled')+' aria-label="เลื่อนลง">↓</button><span style="flex:1"></span>'+(x.img?'<button type="button" class="btn d" data-k="noimg">ลบรูป</button>':'')+'<button type="button" class="btn d" data-k="del">ลบ</button></div></div>';return h}
 function drawP(){ensureIds();$("pl").innerHTML=S.products.map(cardHtml).join("")||'<p class="note">ยังไม่มีสินค้า</p>'}
-function upd(){document.querySelectorAll("#pl .card").forEach(function(c){var x=S.products[+c.getAttribute("data-i")];if(x&&x.set){var a=c.querySelector(".sst"),b=c.querySelector(".sav");if(a)a.textContent=setStock(x);if(b)b.textContent=hint(x)}})}
+function upd(){document.querySelectorAll("#pl .card").forEach(function(c){var x=S.products[+c.getAttribute("data-i")];if(x&&!x.set){var f=c.querySelector(".pf");if(f)f.textContent=profit(x)}if(x&&x.set){var a=c.querySelector(".sst"),b=c.querySelector(".sav");if(a)a.textContent=setStock(x);if(b)b.textContent=hint(x)}})}
 $("pl").addEventListener("input",function(e){var c=e.target.closest(".card");if(!c)return;var x=S.products[+c.getAttribute("data-i")],k=e.target.getAttribute("data-k"),cf=e.target.getAttribute("data-c");
  if(cf=="q"){var j=+e.target.closest(".cmp").getAttribute("data-j");x.set[j].q=Math.max(1,parseInt(e.target.value)||1)}
  else if(k){x[k]=k=="n"?e.target.value:Math.max(0,parseInt(e.target.value)||0);if(k=="n")document.querySelectorAll("#pl select[data-c=id] option").forEach(function(o){if(o.value===x.id)o.textContent=x.n||"(ไม่มีชื่อ)"})}else return;save();upd()});
@@ -137,7 +141,7 @@ function show(){$("lg").hidden=true;$("ed").hidden=false;$("bar").hidden=false;w
 function enter(pw,quiet){var m=$("lm");m.textContent=quiet?"":"กำลังตรวจสอบ…";
  fetch("/api/shop",{method:"POST",headers:{"content-type":"application/json","x-admin-password":pw},body:JSON.stringify({action:"login"})}).then(function(r){return r.json().catch(function(){return{}}).then(function(j){return{ok:r.ok,s:r.status,j:j}})}).then(function(x){
   if(x.ok){try{sessionStorage.setItem("bz-pw",pw)}catch(e){window.__pw=pw}
-   return fetch("/api/shop",{cache:"no-store"}).then(function(r){return r.ok?r.json():null}).catch(function(){return null}).then(function(d){if(d&&Array.isArray(d.products))window.SHOP=d;show()})}
+   return fetch("/api/shop",{cache:"no-store",headers:{"x-admin-password":pw}}).then(function(r){return r.ok?r.json():null}).catch(function(){return null}).then(function(d){if(d&&Array.isArray(d.products))window.SHOP=d;show()})}
   m.textContent=x.s==401?"รหัสผ่านไม่ถูกต้อง":x.s==503?"ยังไม่ได้ตั้งรหัสผ่านใน Netlify (ตัวแปร ADMIN_PASSWORD) ดูวิธีใน README":"เข้าสู่ระบบไม่สำเร็จ ("+(x.j.error||x.s)+")";
   if(quiet){try{sessionStorage.removeItem("bz-pw")}catch(e){}}}).catch(function(){m.textContent="เชื่อมต่อระบบหลังบ้านไม่ได้ (ต้องเปิดผ่านเว็บ bozomusic.com ที่ติดตั้งผ่าน GitHub + Netlify)"})}
 $("lf").onsubmit=function(e){e.preventDefault();var v=$("lp").value;if(v)enter(v,false)};

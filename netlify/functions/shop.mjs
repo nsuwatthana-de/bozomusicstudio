@@ -24,7 +24,11 @@ export default async (req) => {
 
   if (req.method === "GET") {
     const data = await store.get("shop", { type: "json", consistency: "strong" });
-    return json(data || null);
+    if (!data) return json(null);
+    // ราคาต้นทุน (c) เห็นได้เฉพาะแอดมิน — ลูกค้าไม่เห็น
+    if (checkPw(req.headers.get("x-admin-password")) === true) return json(data);
+    const pub = { ...data, products: (data.products || []).map(({ c, ...rest }) => rest) };
+    return json(pub);
   }
 
   if (req.method === "POST") {

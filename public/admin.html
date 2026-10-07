@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow"><title>จัดการร้าน · Bozo Music Studio</title>
+<link rel="icon" href="assets/favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600&family=Sarabun:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FAFAF8;--ink:#112540;--mute:#5C6A82;--line:#E1E4EA;--card:#fff;--yel:#FFA722;--navy:#112540;--ok:#1E7B4B;--bad:#B3361F}
+@media(prefers-color-scheme:dark){:root{--bg:#0B1628;--ink:#F3F1EA;--mute:#9AA8C0;--line:#243653;--card:#112540;--ok:#5FD08F;--bad:#FF8A73}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 Sarabun,system-ui,sans-serif}
+.w{max-width:760px;margin:0 auto;padding:0 16px 120px}
+header{background:var(--navy);color:#fff;border-bottom:3px solid var(--yel)}header .w{padding:14px 16px 12px;display:flex;align-items:center;gap:10px}header img{width:38px;height:38px;border-radius:9px}header b{font:600 17px Prompt,sans-serif}header small{display:block;font-size:12px;opacity:.75}
+h2{font:600 19px Prompt,sans-serif;margin:28px 0 6px}p.s{margin:0 0 12px;color:var(--mute);font-size:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:10px}
+.pr{display:grid;grid-template-columns:64px 1fr;gap:10px;align-items:start}
+.th{width:64px;height:64px;border-radius:10px;border:1px dashed var(--mute);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--mute);overflow:hidden;cursor:pointer;background:none;padding:0}.th img{width:100%;height:100%;object-fit:cover}
+label{display:block;font-size:13px;color:var(--mute);margin:8px 0 2px}
+input[type=text],input[type=tel],input[type=url],textarea{width:100%;font:inherit;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.btn{font:600 15px Prompt,sans-serif;border:1px solid var(--ink);background:var(--ink);color:var(--bg);border-radius:10px;padding:11px 16px;cursor:pointer}.btn.o{background:none;color:var(--ink)}.btn.y{background:var(--yel);border-color:var(--yel);color:#112540}.btn.d{background:none;color:var(--bad);border-color:var(--bad);padding:6px 12px;font-size:13px}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--bg);border-top:2px solid var(--yel);padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px))}.bar .w{padding:0;display:flex;gap:8px;align-items:center}.bar .btn{flex:1}
+.addr{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.addr .btn{width:100%}select{width:100%;font:inherit;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}.sq{padding:6px 12px;min-width:40px}.sm{padding:7px 12px;font-size:13px}.stp{display:grid;grid-template-columns:44px 1fr 44px;gap:6px;align-items:center}.stp input{text-align:center}.stk{padding:8px 0}.acts{display:flex;gap:6px;margin-top:10px;align-items:center}.cmp{display:grid;grid-template-columns:1fr 12px 60px 40px;gap:6px;align-items:center;margin-top:6px}.cmp .d{padding:6px 0}.tg{background:var(--yel);color:#112540;border-radius:6px;padding:0 6px;font:600 12px Prompt,sans-serif}.setc{border-color:var(--yel)}button:disabled{opacity:.35;cursor:default}.crow{display:grid;grid-template-columns:1fr 84px 112px;gap:8px;align-items:center;margin-top:8px}.crow.ch{font-size:12px;color:var(--mute)}.crow input{min-width:0}
+.note{font-size:13px;color:var(--mute)}#msg{position:fixed;left:50%;transform:translateX(-50%);bottom:84px;background:var(--navy);color:#fff;border-radius:20px;padding:8px 16px;font-size:14px;display:none;z-index:9;max-width:90vw}
+details{margin-top:24px}summary{cursor:pointer;color:var(--mute);font-size:14px}
+</style></head><body>
+<header><div class="w"><img src="assets/logo-mark.jpg" alt=""><div><b>จัดการร้าน</b><small>Bozo Music Studio · เห็นเฉพาะเจ้าของร้าน</small></div></div></header>
+<section id="lg" class="w" style="padding-top:24px"><h2 style="margin-top:8px">เข้าสู่ระบบจัดการร้าน</h2><p class="s">ใส่รหัสผ่านแอดมินที่ตั้งไว้ใน Netlify</p><form id="lf"><input type="password" id="lp" autocomplete="current-password" placeholder="รหัสผ่าน" style="width:100%;font:inherit;padding:11px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)"><button class="btn y" type="submit" style="width:100%;margin-top:12px">เข้าสู่ระบบ</button></form><p class="note" id="lm" role="status" style="margin-top:12px;color:var(--bad)"></p></section>
+<main class="w" id="ed" hidden>
+<p class="s" style="margin-top:16px">แก้ไขแล้วกด <b>บันทึกและเผยแพร่</b> (ปุ่มส้มด้านล่าง) ลูกค้าจะเห็นทันที ไม่ต้องอัปโหลดไฟล์ใหม่ · <button type="button" id="lo2" class="btn o sm" style="padding:3px 10px">ออกจากระบบ</button></p>
+<h2>สินค้า</h2><p class="s">แตะรูปเพื่อเปลี่ยนรูป · สต็อก 0 = เปิดพรีออเดอร์ · ใช้ปุ่มลูกศรเรียงลำดับ · "เซ็ต" คือรวมหลายสินค้าขายในราคาเดียว</p>
+<div id="pl"></div><div class="addr"><button class="btn y" id="add">+ เพิ่มสินค้า</button><button class="btn y" id="addset">+ เพิ่มเซ็ต</button></div><label for="so">เรียงสินค้าอัตโนมัติ</label><select id="so"><option value="">เลือกวิธีเรียง…</option><option value="n">ชื่อ ก–ฮ</option><option value="pa">ราคา น้อย → มาก</option><option value="pd">ราคา มาก → น้อย</option><option value="sd">สต็อกมาก → น้อย</option><option value="set">เซ็ตขึ้นก่อน</option></select>
+<h2>ค่าจัดส่งรายอำเภอ</h2><p class="s">คั่นชื่ออำเภอด้วยจุลภาค (,) แล้วกรอกค่าส่งของแต่ละอำเภอ</p>
+<label for="ar">อำเภอที่จัดส่ง</label><input type="text" id="ar">
+<div class="crow ch"><span>อำเภอ</span><span>ค่าส่ง (฿)</span><span>ซื้อครบ (฿) ส่งฟรี</span></div><div id="rt"></div>
+<p class="note" style="margin-top:8px">ซื้อครบ: ใส่ 0 = ส่งฟรีทุกออเดอร์ · เว้นว่าง = ไม่มียอดส่งฟรี (เสียค่าส่งเสมอ)</p>
+<h2>ข้อความและข้อมูลร้าน</h2><p class="s">แก้ข้อความหลักบนหน้าร้านได้ทั้งหมด ช่องที่ล้างว่างไว้จะกลับไปใช้ข้อความเดิม</p>
+<label for="x_shopName">ชื่อร้าน</label><input type="text" id="x_shopName">
+<label for="x_headline">หัวเรื่องหน้าแรก</label><input type="text" id="x_headline">
+<label for="x_checkinText">ข้อความจุดเช็คอิน (รับของที่ร้าน)</label><input type="text" id="x_checkinText">
+<label for="x_mapQuery">ชื่อสถานที่/ที่อยู่สำหรับปุ่มแผนที่ (ค้นหาใน Google Maps)</label><input type="text" id="x_mapQuery">
+<label for="x_soonTitle">กล่อง COMING SOON · หัวข้อ</label><input type="text" id="x_soonTitle">
+<label for="x_soonText">กล่อง COMING SOON · ข้อความ</label><textarea id="x_soonText" rows="3"></textarea>
+<label style="display:flex;gap:8px;align-items:center;margin-top:10px"><input type="checkbox" id="x_soonOff"> ซ่อนกล่อง COMING SOON</label>
+<label for="su">ลิงก์เว็บรับทำเพลง (เว้นว่าง = ซ่อนปุ่ม)</label><input type="url" id="su" placeholder="https://...">
+<label for="lo">LINE Official Account (มี @ นำหน้า)</label><input type="text" id="lo">
+<label for="pp">เลขพร้อมเพย์</label><input type="text" id="pp">
+<div class="row2" style="margin-top:12px"><div class="card" style="margin:0;text-align:center"><div class="note">QR พร้อมเพย์</div><button type="button" class="th" id="qrb" style="width:100px;height:120px;margin:6px auto;display:flex"><img id="qrp" alt="" src="assets/promptpay-qr.jpg" style="object-fit:contain"></button><div class="note">แตะเพื่อเปลี่ยน</div></div>
+<div class="card" style="margin:0;text-align:center"><div class="note">โลโก้ร้าน</div><button type="button" class="th" id="lgb" style="width:100px;height:100px;margin:6px auto;display:flex"><img id="lgp" alt="" src="assets/logo.jpg"></button><div class="note">แตะเพื่อเปลี่ยน</div></div></div>
+<input type="file" id="fx" accept="image/*" hidden>
+<p style="margin-top:20px"><button type="button" class="btn o sm" id="bk">ดาวน์โหลดไฟล์สำรองข้อมูล</button></p>
+</main>
+<div class="bar" id="bar" hidden><div class="w"><button class="btn o" id="rs" style="flex:0 0 auto">คืนค่าเดิม</button><button class="btn y" id="dl">บันทึกและเผยแพร่</button></div></div>
+<div id="msg" role="status"></div><input type="file" id="fi" accept="image/*" hidden>
+<script src="data.js"></script>
+<script>
+function PW(){try{return sessionStorage.getItem("bz-pw")||""}catch(e){return window.__pw||""}}
+function up(d,cb){var t=document.getElementById("msg");fetch("/api/img",{method:"POST",headers:{"content-type":"application/json","x-admin-password":PW()},body:JSON.stringify({data:d})}).then(function(r){return r.json().catch(function(){return{}}).then(function(j){return{ok:r.ok,s:r.status,j:j}})}).then(function(x){if(x.ok&&x.j.url)cb(x.j.url);else{t.textContent=x.s==401?"รหัสผ่านไม่ถูกต้อง":"อัปโหลดรูปไม่สำเร็จ ("+(x.j.error||x.s)+")";t.style.display="block"}}).catch(function(){t.textContent="อัปโหลดรูปไม่สำเร็จ ตรวจอินเทอร์เน็ต";t.style.display="block"})}
+window.__adm=function(){
+var NO=1e9,$=function(i){return document.getElementById(i)},ORIG=JSON.parse(JSON.stringify(window.SHOP||{})),S,pick=-1;
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function toast(t){var m=$("msg");m.textContent=t;m.style.display="block";clearTimeout(toast.t);toast.t=setTimeout(function(){m.style.display="none"},2600)}
+var KEY="bozo-admin-draft";
+var BASE=JSON.stringify(ORIG);try{var d=JSON.parse(localStorage.getItem(KEY)||"null");S=d&&d.base===BASE?d.s:JSON.parse(BASE)}catch(e){S=JSON.parse(BASE)}
+S.products=S.products||[];S.delivery=S.delivery||{areas:["ท่าบ่อ"],rules:{}};S.delivery.rules=S.delivery.rules||{};S.delivery.areas=S.delivery.areas||[];
+function save(){try{localStorage.setItem(KEY,JSON.stringify({base:BASE,s:S}))}catch(e){}}
+function gid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+function ensureIds(){S.products.forEach(function(x){if(!x.id)x.id=gid()})}
+function byId(id){for(var i=0;i<S.products.length;i++)if(S.products[i].id===id)return S.products[i]}
+function setStock(x){var m=Infinity;(x.set||[]).forEach(function(c){var p=byId(c.id);m=Math.min(m,p?Math.floor((+p.s||0)/Math.max(1,c.q||1)):0)});return m===Infinity?0:m}
+function setSum(x){var t=0;(x.set||[]).forEach(function(c){var p=byId(c.id);if(p)t+=(+p.p||0)*(c.q||1)});return t}
+function hint(x){var t=setSum(x),d=t-(+x.p||0);return"ราคาปกติรวม ฿"+t.toLocaleString("th-TH")+(d>0?" · ลูกค้าประหยัด ฿"+d.toLocaleString("th-TH"):d<0?" · ราคาเซ็ตสูงกว่าซื้อแยก":"")}
+function cardHtml(x,i){var n=S.products.length,isSet=!!x.set;
+ var h='<div class="card'+(isSet?' setc':'')+'" data-i="'+i+'"><div class="pr"><button type="button" class="th" data-k="img" aria-label="เปลี่ยนรูป">'+(x.img?'<img src="'+esc(x.img)+'" alt="">':'+ รูป')+'</button><div><label>'+(isSet?'<span class="tg">เซ็ต</span> ':'')+'ชื่อ'+(isSet?'เซ็ต':'สินค้า')+'</label><input type="text" data-k="n" value="'+esc(x.n)+'"></div></div>';
+ h+='<div class="row2"><div><label>ราคา'+(isSet?'เซ็ต':'')+' (฿)</label><input type="tel" inputmode="numeric" data-k="p" value="'+(+x.p||0)+'"></div><div><label>สต็อก'+(isSet?' (คำนวณอัตโนมัติ)':'')+'</label>';
+ if(isSet)h+='<div class="stk"><b class="sst">'+setStock(x)+'</b> ชุด</div>';
+ else h+='<div class="stp"><button type="button" class="btn o sq" data-k="dec" aria-label="ลดสต็อก">−</button><input type="tel" inputmode="numeric" data-k="s" value="'+(+x.s||0)+'"><button type="button" class="btn o sq" data-k="inc" aria-label="เพิ่มสต็อก">+</button></div>';
+ h+='</div></div>';
+ if(isSet){h+='<label>สินค้าในเซ็ต</label>';(x.set||[]).forEach(function(c,j){h+='<div class="cmp" data-j="'+j+'"><select data-c="id">'+S.products.filter(function(p){return!p.set}).map(function(p){return'<option value="'+esc(p.id)+'"'+(p.id===c.id?' selected':'')+'>'+esc(p.n||"(ไม่มีชื่อ)")+'</option>'}).join("")+'</select><span>×</span><input type="tel" inputmode="numeric" data-c="q" value="'+(c.q||1)+'"><button type="button" class="btn d" data-k="rmc" aria-label="เอาออกจากเซ็ต">✕</button></div>'});
+  h+='<button type="button" class="btn o sm" data-k="addc" style="margin-top:8px">+ เพิ่มสินค้าในเซ็ต</button><div class="note sav" style="margin-top:6px">'+hint(x)+'</div>'}
+ h+='<div class="acts"><button type="button" class="btn o sq" data-k="top" '+(i?'':'disabled')+' aria-label="ขึ้นบนสุด">⤒</button><button type="button" class="btn o sq" data-k="up" '+(i?'':'disabled')+' aria-label="เลื่อนขึ้น">↑</button><button type="button" class="btn o sq" data-k="down" '+(i<n-1?'':'disabled')+' aria-label="เลื่อนลง">↓</button><span style="flex:1"></span>'+(x.img?'<button type="button" class="btn d" data-k="noimg">ลบรูป</button>':'')+'<button type="button" class="btn d" data-k="del">ลบ</button></div></div>';return h}
+function drawP(){ensureIds();$("pl").innerHTML=S.products.map(cardHtml).join("")||'<p class="note">ยังไม่มีสินค้า</p>'}
+function upd(){document.querySelectorAll("#pl .card").forEach(function(c){var x=S.products[+c.getAttribute("data-i")];if(x&&x.set){var a=c.querySelector(".sst"),b=c.querySelector(".sav");if(a)a.textContent=setStock(x);if(b)b.textContent=hint(x)}})}
+$("pl").addEventListener("input",function(e){var c=e.target.closest(".card");if(!c)return;var x=S.products[+c.getAttribute("data-i")],k=e.target.getAttribute("data-k"),cf=e.target.getAttribute("data-c");
+ if(cf=="q"){var j=+e.target.closest(".cmp").getAttribute("data-j");x.set[j].q=Math.max(1,parseInt(e.target.value)||1)}
+ else if(k){x[k]=k=="n"?e.target.value:Math.max(0,parseInt(e.target.value)||0);if(k=="n")document.querySelectorAll("#pl select[data-c=id] option").forEach(function(o){if(o.value===x.id)o.textContent=x.n||"(ไม่มีชื่อ)"})}else return;save();upd()});
+$("pl").addEventListener("change",function(e){var c=e.target.closest(".card");if(!c)return;if(e.target.getAttribute("data-c")=="id"){var x=S.products[+c.getAttribute("data-i")],j=+e.target.closest(".cmp").getAttribute("data-j");x.set[j].id=e.target.value;save();upd()}});
+function mv(i,j){if(j<0||j>=S.products.length)return;var t=S.products.splice(i,1)[0];S.products.splice(j,0,t);save();drawP()}
+$("pl").addEventListener("click",function(e){var b=e.target.closest("button[data-k]");if(!b)return;var card=b.closest(".card"),i=+card.getAttribute("data-i"),k=b.getAttribute("data-k"),x=S.products[i];
+ if(k=="del"){var inSets=S.products.filter(function(p){return p.set&&p.set.some(function(c){return c.id===x.id})}).length;if(confirm("ลบ \""+x.n+"\" ?"+(inSets?"\n(สินค้านี้อยู่ในเซ็ต "+inSets+" รายการ จะถูกเอาออกจากเซ็ตด้วย)":""))){S.products.splice(i,1);S.products.forEach(function(p){if(p.set)p.set=p.set.filter(function(c){return c.id!==x.id})});save();drawP()}}
+ else if(k=="noimg"){delete x.img;save();drawP()}
+ else if(k=="img"){pick=i;$("fi").value="";$("fi").click()}
+ else if(k=="up")mv(i,i-1);else if(k=="down")mv(i,i+1);else if(k=="top")mv(i,0);
+ else if(k=="inc"||k=="dec"){x.s=Math.max(0,(+x.s||0)+(k=="inc"?1:-1));card.querySelector("input[data-k=s]").value=x.s;save();upd()}
+ else if(k=="addc"){var first=S.products.filter(function(p){return!p.set})[0];if(!first){toast("ยังไม่มีสินค้าให้ใส่ในเซ็ต");return}x.set.push({id:first.id,q:1});save();drawP()}
+ else if(k=="rmc"){x.set.splice(+b.closest(".cmp").getAttribute("data-j"),1);save();drawP()}});
+$("fi").onchange=function(){var f=this.files[0];if(!f||pick<0)return;var r=new FileReader();r.onload=function(){var im=new Image();im.onload=function(){var m=720,sc=Math.min(1,m/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*sc);c.height=Math.round(im.height*sc);var g=c.getContext("2d");g.fillStyle="#fff";g.fillRect(0,0,c.width,c.height);g.drawImage(im,0,0,c.width,c.height);var pd0=S.products[pick].id;toast("กำลังอัปโหลดรูป…");up(c.toDataURL("image/jpeg",.8),function(u){var q=byId(pd0);if(q){q.img=u;save();drawP();toast("ใส่รูปแล้ว")}})};im.onerror=function(){toast("อ่านรูปนี้ไม่ได้ ลองรูปอื่น")};im.src=r.result};r.readAsDataURL(f)};
+$("add").onclick=function(){S.products.unshift({id:gid(),n:"สินค้าใหม่",p:0,s:0});save();drawP();var f=document.querySelector("#pl input[data-k=n]");if(f){f.focus();f.select()}};
+$("addset").onclick=function(){var f=S.products.filter(function(p){return!p.set})[0];S.products.unshift({id:gid(),n:"เซ็ตใหม่",p:0,set:f?[{id:f.id,q:1}]:[]});save();drawP();var g=document.querySelector("#pl input[data-k=n]");if(g){g.focus();g.select()}};
+$("so").onchange=function(){var v=this.value;if(!v)return;var c=function(a,b){return String(a.n).localeCompare(String(b.n),"th")};var st=function(x){return x.set?setStock(x):(+x.s||0)};S.products.sort(v=="n"?c:v=="pa"?function(a,b){return a.p-b.p}:v=="pd"?function(a,b){return b.p-a.p}:v=="sd"?function(a,b){return st(b)-st(a)}:function(a,b){return(a.set?0:1)-(b.set?0:1)});this.value="";save();drawP();toast("เรียงสินค้าแล้ว")};
+function parseAreas(v){var o=[];String(v).split(/[,،、\n]+/).forEach(function(x){x=x.replace(/[<>&"']/g,"").trim();if(x&&o.indexOf(x)<0&&o.length<30)o.push(x)});return o}
+function rule(a){var x=S.delivery.rules[a]||{};return{fee:x.fee>=0?x.fee:0,free:x.free>=0?x.free:NO}}
+function drawR(list,cur){$("rt").innerHTML=list.map(function(a){var f,r,x=cur&&cur[a];if(x){f=x[0];r=x[1]}else{var q=rule(a);f=q.fee;r=q.free>=NO?"":q.free}return'<div class="crow" data-a="'+esc(a)+'"><b>'+esc(a)+'</b><input type="tel" inputmode="numeric" value="'+esc(f)+'"><input type="tel" inputmode="numeric" placeholder="ไม่มี" value="'+esc(r)+'"></div>'}).join("")}
+function readR(){var o={};document.querySelectorAll("#rt .crow").forEach(function(r){var i=r.querySelectorAll("input");o[r.getAttribute("data-a")]=[i[0].value,i[1].value]});return o}
+function collectR(){var ar=parseAreas($("ar").value),v=readR(),rules={},bad=!ar.length;ar.forEach(function(a){var x=v[a]||["0",""],f=x[0].trim()===""?0:parseInt(x[0]),y=x[1].trim()===""?NO:parseInt(x[1]);if(!(f>=0)||!(y>=0))bad=true;rules[a]={fee:f,free:y}});return bad?null:{areas:ar,rules:rules}}
+$("ar").value=S.delivery.areas.join(", ");drawR(S.delivery.areas);
+function syncR(){var l=parseAreas($("ar").value),cur=[].map.call(document.querySelectorAll("#rt .crow"),function(r){return r.getAttribute("data-a")});if(l.join("\n")==cur.join("\n"))return;drawR(l,readR());var d=collectR();if(d){S.delivery={areas:d.areas,rules:d.rules};save()}}
+var tm;$("ar").addEventListener("input",function(){clearTimeout(tm);tm=setTimeout(syncR,450)});$("ar").onchange=syncR;
+$("rt").addEventListener("input",function(){var d=collectR();if(d){S.delivery={areas:d.areas,rules:d.rules};save()}});
+var DEF={shopName:"Bozo Music Studio",headline:"อุปกรณ์ดนตรีส่งถึงมือคุณ",checkinText:"รับของเองที่ร้านได้",mapQuery:"โรงเรียนท่าบ่อ หนองคาย",soonTitle:"คอลเลกชันของเรากำลังเติบโต",soonText:"วันนี้เราเริ่มจากอุปกรณ์ที่นักดนตรีใช้ทุกวัน อีกไม่นานจะมีกีตาร์ เบส คีย์บอร์ด และอุปกรณ์อีกมากมายให้คุณได้เลือก"};
+var TK=Object.keys(DEF);
+function fillX(){S.text=S.text||{};TK.forEach(function(k){$("x_"+k).value=S.text[k]||DEF[k]});$("x_soonOff").checked=!!S.text.soonOff;$("su").value=S.studioUrl||"";$("lo").value=S.lineOA||"";$("pp").value=S.promptpay||"";$("qrp").src=S.qrImg||"assets/promptpay-qr.jpg";$("lgp").src=S.logoImg||"assets/logo.jpg"}
+fillX();
+TK.forEach(function(k){$("x_"+k).addEventListener("input",function(){S.text=S.text||{};var v=this.value.trim();if(!v||v==DEF[k])delete S.text[k];else S.text[k]=v;save()})});
+$("x_soonOff").onchange=function(){S.text=S.text||{};if(this.checked)S.text.soonOff=true;else delete S.text.soonOff;save()};
+$("su").oninput=function(){S.studioUrl=this.value.trim();save()};$("lo").oninput=function(){S.lineOA=this.value.trim();save()};$("pp").oninput=function(){S.promptpay=this.value.trim();save()};
+var fxk="";function pickImg(k){fxk=k;$("fx").value="";$("fx").click()}
+$("qrb").onclick=function(){pickImg("qrImg")};$("lgb").onclick=function(){pickImg("logoImg")};
+$("fx").onchange=function(){var f=this.files[0];if(!f||!fxk)return;var k=fxk,mx=k=="qrImg"?640:256;var r=new FileReader();r.onload=function(){var im=new Image();im.onload=function(){var sc=Math.min(1,mx/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*sc);c.height=Math.round(im.height*sc);var g=c.getContext("2d");g.fillStyle="#fff";g.fillRect(0,0,c.width,c.height);g.drawImage(im,0,0,c.width,c.height);toast("กำลังอัปโหลดรูป…");up(c.toDataURL("image/jpeg",.88),function(u){S[k]=u;save();fillX();toast("เปลี่ยนรูปแล้ว")})};im.onerror=function(){toast("อ่านรูปนี้ไม่ได้")};im.src=r.result};r.readAsDataURL(f)};
+$("rs").onclick=function(){if(!confirm("ล้างการแก้ไขที่ยังไม่ดาวน์โหลด และกลับไปใช้ค่าจากไฟล์ data.js เดิม?"))return;try{localStorage.removeItem(KEY)}catch(e){}S=JSON.parse(JSON.stringify(ORIG));S.products=S.products||[];S.delivery=S.delivery||{areas:[],rules:{}};$("ar").value=S.delivery.areas.join(", ");drawR(S.delivery.areas);fillX();drawP();toast("คืนค่าเดิมแล้ว")};
+function buildOut(){var d=collectR();if(!d){toast("ตรวจค่าส่งและรายชื่ออำเภอ");return null}S.delivery={areas:d.areas,rules:d.rules};
+ var bad=S.products.filter(function(x){return!String(x.n).trim()});if(bad.length){toast("มีสินค้าที่ยังไม่ใส่ชื่อ");return null}
+ var out=JSON.parse(JSON.stringify(S));out.delivery={areas:d.areas,rules:d.rules};delete out.updatedAt;return out}
+$("dl").onclick=function(){var out=buildOut();if(!out)return;var b=this;b.disabled=true;b.textContent="กำลังบันทึก…";
+ fetch("/api/shop",{method:"POST",headers:{"content-type":"application/json","x-admin-password":PW()},body:JSON.stringify({shop:out})}).then(function(r){return r.json().catch(function(){return{}}).then(function(j){return{ok:r.ok,s:r.status,j:j}})}).then(function(x){
+  if(x.ok){try{localStorage.removeItem(KEY)}catch(e){}toast("บันทึกและเผยแพร่แล้ว ลูกค้าเห็นทันที")}
+  else if(x.s==401){toast("รหัสผ่านไม่ถูกต้อง ลองเข้าสู่ระบบใหม่");setTimeout(function(){window.__logout&&window.__logout()},1200)}
+  else if(x.s==503)toast("ยังไม่ได้ตั้ง ADMIN_PASSWORD ใน Netlify");
+  else toast("บันทึกไม่สำเร็จ ("+(x.j.error||x.s)+")")}).catch(function(){toast("เชื่อมต่อไม่ได้ ลองใหม่อีกครั้ง")}).then(function(){b.disabled=false;b.textContent="บันทึกและเผยแพร่"})};
+$("bk").onclick=function(){var out=buildOut();if(!out)return;
+ var txt="/* สำรองข้อมูลร้าน Bozo Music Studio — "+new Date().toLocaleString("th-TH")+" */\nwindow.SHOP="+JSON.stringify(out,null,2)+";\n";
+ var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([txt],{type:"text/javascript"}));a.download="data-backup.js";document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},500);toast("ดาวน์โหลดไฟล์สำรองแล้ว")};
+drawP();
+};
+</script>
+<script>
+(function(){var $=function(i){return document.getElementById(i)};
+function show(){$("lg").hidden=true;$("ed").hidden=false;$("bar").hidden=false;window.__adm()}
+function enter(pw,quiet){var m=$("lm");m.textContent=quiet?"":"กำลังตรวจสอบ…";
+ fetch("/api/shop",{method:"POST",headers:{"content-type":"application/json","x-admin-password":pw},body:JSON.stringify({action:"login"})}).then(function(r){return r.json().catch(function(){return{}}).then(function(j){return{ok:r.ok,s:r.status,j:j}})}).then(function(x){
+  if(x.ok){try{sessionStorage.setItem("bz-pw",pw)}catch(e){window.__pw=pw}
+   return fetch("/api/shop",{cache:"no-store"}).then(function(r){return r.ok?r.json():null}).catch(function(){return null}).then(function(d){if(d&&Array.isArray(d.products))window.SHOP=d;show()})}
+  m.textContent=x.s==401?"รหัสผ่านไม่ถูกต้อง":x.s==503?"ยังไม่ได้ตั้งรหัสผ่านใน Netlify (ตัวแปร ADMIN_PASSWORD) ดูวิธีใน README":"เข้าสู่ระบบไม่สำเร็จ ("+(x.j.error||x.s)+")";
+  if(quiet){try{sessionStorage.removeItem("bz-pw")}catch(e){}}}).catch(function(){m.textContent="เชื่อมต่อระบบหลังบ้านไม่ได้ (ต้องเปิดผ่านเว็บ bozomusic.com ที่ติดตั้งผ่าน GitHub + Netlify)"})}
+$("lf").onsubmit=function(e){e.preventDefault();var v=$("lp").value;if(v)enter(v,false)};
+window.__logout=function(){try{sessionStorage.removeItem("bz-pw")}catch(e){}location.reload()};
+$("lo2").onclick=window.__logout;
+var saved="";try{saved=sessionStorage.getItem("bz-pw")||""}catch(e){}if(saved)enter(saved,true);
+})();
+</script></body></html>

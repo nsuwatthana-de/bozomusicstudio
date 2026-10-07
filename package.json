@@ -1,0 +1,9 @@
+{
+  "name": "bozomusic",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Bozo Music Studio - ร้านอุปกรณ์ดนตรี (Netlify + Functions + Blobs)",
+  "dependencies": {
+    "@netlify/blobs": ">=8.0.0"
+  }
+}

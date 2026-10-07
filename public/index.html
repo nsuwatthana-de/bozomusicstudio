@@ -124,7 +124,7 @@ nav a{padding:6px 7px;font-size:14px;font-weight:600;color:var(--mute);text-deco
 <script src="data.js"></script>
 <script>
 function boot(){
-var S=window.SHOP||{},T=S.text||{},SN=T.shopName||"Bozo Music Studio",D=S.delivery||{},OA=String(S.lineOA||"").replace(/[^@A-Za-z0-9._~-]/g,""),PP=String(S.promptpay||"");
+var S=window.SHOP||{},T=S.text||{},SN=T.shopName||"Bozo Music Studio",D=S.delivery||{},OA=String(S.lineOA||"").replace(/[^@A-Za-z0-9._~-]/g,"");if(OA&&OA.charAt(0)!="@")OA="@"+OA,PP=String(S.promptpay||"");
 var CFG={fee:+D.fee>=0?+D.fee:30,free:+D.free>=0?+D.free:800,fa:D.freeArea||"",areas:(D.areas&&D.areas.length)?D.areas:["ท่าบ่อ"],r:D.rules};normCfg();
 var P=(S.products||[]).map(function(x){return{id:x.id||"",n:String(x.n),p:+x.p||0,s:Math.max(0,+x.s||0),img:x.img||"",set:Array.isArray(x.set)?x.set.map(function(c){return{id:c.id,q:Math.max(1,+c.q||1)}}):null}});
 function pid(id){for(var i=0;i<P.length;i++)if(P[i].id&&P[i].id===id)return P[i]}
@@ -132,7 +132,7 @@ function st(x){if(!x.set)return x.s;var m=Infinity;x.set.forEach(function(c){var
 function inc(x){return x.set?x.set.map(function(c){var p=pid(c.id);return p?esc(p.n)+(c.q>1?" ×"+c.q:""):""}).filter(Boolean).join(" + "):""}
 var cart={},pos="",$=function(i){return document.getElementById(i)},B=function(n){return"฿"+n.toLocaleString("th-TH")};
 function esc(t){return String(t).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
-function toast(m){var t=$("toast");t.textContent=m;t.classList.add("on");clearTimeout(toast.h);toast.h=setTimeout(function(){t.classList.remove("on")},2600)}
+function toast(m,ms){var t=$("toast");t.textContent=m;t.classList.add("on");clearTimeout(toast.h);toast.h=setTimeout(function(){t.classList.remove("on")},ms||2600)}
 function thumb(x){return x.img?'<img class="ph" loading="lazy" src="'+esc(x.img)+'" alt="'+esc(x.n)+'">':'<div class="ph"></div>'}
 function chk(id,ok,msg){$(id).classList.toggle("bad",!ok);$("e_"+id).textContent=ok?"":msg;return ok}
 function rule(a){var x=(CFG.r&&CFG.r[a])||{};return{fee:x.fee>=0?x.fee:0,free:x.free>=0?x.free:1e9}}
@@ -171,7 +171,10 @@ L.push("--","ค่าสินค้า "+B(t.sub),"ค่าส่ง "+(t.del
 var oi=[];P.forEach(function(x,i){if(cart[i])oi.push({id:x.id,q:cart[i]})});
 try{fetch("/api/orders",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({action:"create",name:nm,phone:phn,area:$("ar").value,place:pl,items:oi}),keepalive:true}).catch(function(){})}catch(e){}
 cart={};draw();
-window.open("https://line.me/R/oaMessage/"+OA+"/?"+encodeURIComponent(L.join("\n")),"_blank");toast("เปิด LINE แล้ว กดส่งข้อความเพื่อยืนยันออเดอร์")};
+var txt=L.join("\n"),url="https://line.me/R/oaMessage/"+OA+"/?"+encodeURIComponent(txt);
+try{navigator.clipboard&&navigator.clipboard.writeText(txt).catch(function(){})}catch(e){}
+var w=null;try{w=window.open(url,"_blank")}catch(e){}if(!w)location.href=url;
+toast("เปิด LINE แล้ว กดส่งข้อความเพื่อยืนยันออเดอร์ (ถ้า LINE ไม่เด้ง ข้อความออเดอร์ถูกคัดลอกไว้แล้ว เปิดแชท LINE ร้านแล้ววางได้เลย)",7000)};
 $("sgo").onclick=function(){var v=$("sg").value.trim();if(!chk("sg",v.length>=3,"พิมพ์สินค้าที่อยากให้มีก่อน"))return;
 window.open("https://line.me/R/oaMessage/"+OA+"/?"+encodeURIComponent("เสนอสินค้า "+SN+"\nอยากให้มี: "+v),"_blank");$("sg").value="";toast("เปิด LINE แล้ว กดส่งข้อความเพื่อส่งให้ร้าน")};
 $("add").href="https://line.me/R/ti/p/"+OA;

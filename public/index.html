@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Bozo Music Studio | อุปกรณ์ดนตรีส่งถึงมือคุณ</title>
-<meta name="description" content="ร้านอุปกรณ์ดนตรี สายกีตาร์ สายเบส คาโป ปิ๊ก และอุปกรณ์ดูแลเครื่องดนตรี จัดส่งในท่าบ่อและหนองคาย สั่งผ่านเว็บ รับออเดอร์ทาง LINE ทันที">
+<meta name="description" content="ร้านอุปกรณ์ดนตรี สายกีตาร์ สายเบส คาโป ปิ๊ก และอุปกรณ์ดูแลเครื่องดนตรี จัดส่งในอำเภอหนองหาน อุดรธานี สั่งผ่านเว็บ รับออเดอร์ทาง LINE ทันที">
 <meta name="theme-color" content="#112540">
 <link rel="canonical" href="https://bozomusic.com/">
 <link rel="icon" type="image/png" href="assets/favicon.png">
@@ -125,7 +125,7 @@ nav a{padding:6px 7px;font-size:14px;font-weight:600;color:var(--mute);text-deco
 <script>
 function boot(){
 var S=window.SHOP||{},T=S.text||{},SN=T.shopName||"Bozo Music Studio",D=S.delivery||{},OA=String(S.lineOA||"").replace(/[^@A-Za-z0-9._~-]/g,"").replace(/^(?=[^@])(?=.)/,"@"),PP=String(S.promptpay||"");
-var CFG={fee:+D.fee>=0?+D.fee:30,free:+D.free>=0?+D.free:800,fa:D.freeArea||"",areas:(D.areas&&D.areas.length)?D.areas:["ท่าบ่อ"],r:D.rules};normCfg();
+var CFG={fee:+D.fee>=0?+D.fee:30,free:+D.free>=0?+D.free:800,fa:D.freeArea||"",areas:(D.areas&&D.areas.length)?D.areas:["หนองหาน"],r:D.rules};normCfg();
 var P=(S.products||[]).map(function(x){return{id:x.id||"",n:String(x.n),p:+x.p||0,s:Math.max(0,+x.s||0),img:x.img||"",set:Array.isArray(x.set)?x.set.map(function(c){return{id:c.id,q:Math.max(1,+c.q||1)}}):null}});
 function pid(id){for(var i=0;i<P.length;i++)if(P[i].id&&P[i].id===id)return P[i]}
 function st(x){if(!x.set)return x.s;var m=Infinity;x.set.forEach(function(c){var p=pid(c.id);m=Math.min(m,p?Math.floor(p.s/c.q):0)});return m===Infinity?0:m}
@@ -189,7 +189,7 @@ toast("เปิด LINE แล้ว กดส่งข้อความเพ
 $("sgo").onclick=function(){var v=$("sg").value.trim();if(!chk("sg",v.length>=3,"พิมพ์สินค้าที่อยากให้มีก่อน"))return;
 window.open("https://line.me/R/oaMessage/"+OA+"/?"+encodeURIComponent("เสนอสินค้า "+SN+"\nอยากให้มี: "+v),"_blank");$("sg").value="";toast("เปิด LINE แล้ว กดส่งข้อความเพื่อส่งให้ร้าน")};
 $("add").href="https://line.me/R/ti/p/"+OA;
-$("map").href="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(T.mapQuery||"โรงเรียนท่าบ่อ หนองคาย");
+$("map").href="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(T.mapQuery||"โรงเรียนหนองหานวิทยา อุดรธานี");
 (function(){var h=document.querySelector(".hero h1");if(T.headline)h.textContent=T.headline;var sn=document.querySelector(".soon");if(sn){if(T.soonTitle)sn.querySelector("h3").textContent=T.soonTitle;if(T.soonText)sn.querySelector("p").textContent=T.soonText;var SL=Array.isArray(S.soon)?S.soon:String(T.soonList||"").split(/\n/).map(function(v){return{n:v}});if(SL.length){var ul=document.createElement("ul");SL.slice(0,24).forEach(function(v){var n=String(v&&v.n||"").trim().slice(0,60),m=v&&typeof v.img=="string"&&/^(\/api\/img\?|assets\/|https?:)/.test(v.img)?v.img:"";if(!n&&!m)return;var li=document.createElement("li");if(m){li.className="im";var g=document.createElement("img");g.src=m;g.alt=n;g.loading="lazy";li.appendChild(g);if(n){var sp=document.createElement("span");sp.textContent=n;li.appendChild(sp)}}else li.textContent=n;ul.appendChild(li)});if(ul.children.length)sn.appendChild(ul)}if(T.soonOff)sn.hidden=true}
 if(T.checkinText)$("cin").textContent=T.checkinText;
 if(T.shopName){var p=T.shopName.trim().split(/\s+/),lg=document.querySelector(".logo span");lg.innerHTML=esc(p[0])+(p.length>1?"<small>"+esc(p.slice(1).join(" "))+"</small>":"");document.title=T.shopName+" | "+(T.headline||"อุปกรณ์ดนตรีส่งถึงมือคุณ");var ft=document.querySelector("footer .w");ft.lastChild.textContent=T.shopName}

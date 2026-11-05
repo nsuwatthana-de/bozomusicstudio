@@ -62,7 +62,7 @@ function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{"&":"&amp
 function toast(t){var m=$("msg");m.textContent=t;m.style.display="block";clearTimeout(toast.t);toast.t=setTimeout(function(){m.style.display="none"},2600)}
 var KEY="bozo-admin-draft";
 var BASE=JSON.stringify(ORIG);try{var d=JSON.parse(localStorage.getItem(KEY)||"null");S=d&&d.base===BASE?d.s:JSON.parse(BASE)}catch(e){S=JSON.parse(BASE)}
-S.products=S.products||[];S.delivery=S.delivery||{areas:["ท่าบ่อ"],rules:{}};S.delivery.rules=S.delivery.rules||{};S.delivery.areas=S.delivery.areas||[];
+S.products=S.products||[];S.delivery=S.delivery||{areas:["หนองหาน"],rules:{}};S.delivery.rules=S.delivery.rules||{};S.delivery.areas=S.delivery.areas||[];
 function save(){try{localStorage.setItem(KEY,JSON.stringify({base:BASE,s:S}))}catch(e){}}
 function gid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
 function ensureIds(){S.products.forEach(function(x){if(!x.id)x.id=gid()})}
@@ -111,7 +111,7 @@ $("ar").value=S.delivery.areas.join(", ");drawR(S.delivery.areas);
 function syncR(){var l=parseAreas($("ar").value),cur=[].map.call(document.querySelectorAll("#rt .crow"),function(r){return r.getAttribute("data-a")});if(l.join("\n")==cur.join("\n"))return;drawR(l,readR());var d=collectR();if(d){S.delivery={areas:d.areas,rules:d.rules};save()}}
 var tm;$("ar").addEventListener("input",function(){clearTimeout(tm);tm=setTimeout(syncR,450)});$("ar").onchange=syncR;
 $("rt").addEventListener("input",function(){var d=collectR();if(d){S.delivery={areas:d.areas,rules:d.rules};save()}});
-var DEF={shopName:"Bozo Music Studio",headline:"อุปกรณ์ดนตรีส่งถึงมือคุณ",checkinText:"รับของเองที่ร้านได้",mapQuery:"โรงเรียนท่าบ่อ หนองคาย",soonTitle:"คอลเลกชันของเรากำลังเติบโต",soonText:"วันนี้เราเริ่มจากอุปกรณ์ที่นักดนตรีใช้ทุกวัน อีกไม่นานจะมีกีตาร์ เบส คีย์บอร์ด และอุปกรณ์อีกมากมายให้คุณได้เลือก"};
+var DEF={shopName:"Bozo Music Studio",headline:"อุปกรณ์ดนตรีส่งถึงมือคุณ",checkinText:"รับของเองที่ร้านได้",mapQuery:"โรงเรียนหนองหานวิทยา อุดรธานี",soonTitle:"คอลเลกชันของเรากำลังเติบโต",soonText:"วันนี้เราเริ่มจากอุปกรณ์ที่นักดนตรีใช้ทุกวัน อีกไม่นานจะมีกีตาร์ เบส คีย์บอร์ด และอุปกรณ์อีกมากมายให้คุณได้เลือก"};
 var TK=Object.keys(DEF);
 function fillX(){S.text=S.text||{};TK.forEach(function(k){$("x_"+k).value=S.text[k]||DEF[k]});$("x_soonOff").checked=!!S.text.soonOff;$("su").value=S.studioUrl||"";$("lo").value=S.lineOA||"";$("pp").value=S.promptpay||"";$("qrp").src=S.qrImg||"assets/promptpay-qr.jpg";$("lgp").src=S.logoImg||"assets/logo.jpg"}
 fillX();

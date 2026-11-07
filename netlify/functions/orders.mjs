@@ -72,6 +72,11 @@ export default async (req) => {
         id, t, name: clip(b.name, 80), phone: clip(b.phone, 20), area, place: clip(b.place, 300),
         items, sub, del, tot: sub + del, cost, status: "new",
       };
+      // หมุดที่อยู่ของลูกค้า (ไม่บังคับ) เห็นเฉพาะแอดมิน: GET ?ids= ไม่คืนค่านี้
+      const lat = b.pin && b.pin.lat, lng = b.pin && b.pin.lng;
+      if (typeof lat === "number" && typeof lng === "number" && Math.abs(lat) <= 90 && Math.abs(lng) <= 180) {
+        order.pin = { lat: +lat.toFixed(6), lng: +lng.toFixed(6) };
+      }
       await store.setJSON(id, order);
       return json({ ok: true, id });
     }

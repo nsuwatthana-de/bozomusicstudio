@@ -110,6 +110,23 @@ footer{text-align:center;color:var(--mute);font-size:13px;padding:22px 0 8px}foo
 .pad{padding:12px}
 .qr{display:flex;align-items:center;gap:14px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--card)}
 .qrimg{flex:none;width:130px;height:160px;padding:0;border:1px dashed var(--mute);border-radius:8px;background:#fff;overflow:hidden}.qrimg img{width:100%;height:100%;object-fit:contain}
+/* เพิ่มลงตะกร้า */
+.hc b.bump{animation:bump .35s ease}@keyframes bump{40%{transform:scale(1.45)}}
+@media(prefers-reduced-motion:reduce){.hc b.bump{animation:none}}
+#pda .btn{padding:11px 8px;white-space:nowrap;font-size:15px}#pda .btn svg{width:20px;height:20px}#pda .chat{flex:0 0 46px;padding:0}
+#sh{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.5);display:flex;align-items:flex-end;justify-content:center}
+.shp{background:var(--card);width:100%;max-width:680px;border-radius:16px 16px 0 0;padding:14px 14px calc(14px + env(safe-area-inset-bottom,0px))}
+.shh{display:grid;grid-template-columns:88px 1fr 36px;gap:12px;align-items:end;padding-bottom:12px;border-bottom:1px solid var(--line)}.shh .pi{border-radius:8px}.shh .pp{font-size:21px}
+.shx{align-self:start;background:none;border:0;padding:6px;color:var(--mute);display:flex}
+.shq{display:flex;align-items:center;justify-content:space-between;padding:14px 0;font-weight:600}
+/* ปักหมุดที่อยู่ */
+.pinc{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--bg)}.pinc svg{color:var(--price)}.pinc .t{flex:1;min-width:0;font-size:14px}.pinc a,.pinc button.lk{background:none;border:0;padding:0;font-size:13px;color:var(--ink);text-decoration:underline;margin-right:12px}
+.pinb{display:flex;width:100%;align-items:center;justify-content:center;gap:8px;border:1px dashed var(--price);border-radius:10px;padding:12px;background:none;color:var(--price);font-weight:600}
+.pkw{flex:1;position:relative;min-height:0;background:var(--line)}#pkm{position:absolute;inset:0;z-index:0}
+.pkp{position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);width:44px;height:44px;z-index:1001;pointer-events:none;color:#D92D20;fill:#D92D20;stroke:#fff;stroke-width:1.5;filter:drop-shadow(0 2px 3px rgba(0,0,0,.4))}.pkp circle{fill:#fff;stroke:none}
+.pkg{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:1001;display:flex;align-items:center;gap:6px;white-space:nowrap;border:0;border-radius:99px;background:#fff;color:#112540;padding:9px 16px;font-weight:600;font-size:14px;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.pkh{position:absolute;left:58px;right:12px;top:10px;z-index:1001;background:rgba(17,37,64,.88);color:#fff;border-radius:10px;padding:6px 10px;font-size:13px;text-align:center;pointer-events:none}
+.pkx{position:absolute;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;background:var(--bg);color:var(--mute)}
 /* orders */
 .oc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:10px}.oc .h{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .bd{border-radius:99px;padding:1px 10px;font:600 12px/20px Prompt,sans-serif;background:#FFE7B8;color:#6B4200}.bd.paid{background:#D6E8FF;color:#0B3B7A}.bd.done{background:#D2F2DF;color:#0E5A33}.bd.cancel{background:#FAD7D0;color:#8A2410}
@@ -155,10 +172,18 @@ footer{text-align:center;color:var(--mute);font-size:13px;padding:22px 0 8px}foo
 </div></nav>
 
 <!-- รายละเอียดสินค้า -->
-<div class="ov" id="pd" hidden role="dialog" aria-label="รายละเอียดสินค้า"><div class="ot"><button type="button" data-back aria-label="กลับ"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button><h2>รายละเอียดสินค้า</h2></div><div class="ob" id="pdb"></div><div class="oa" id="pda"></div></div>
+<div class="ov" id="pd" hidden role="dialog" aria-label="รายละเอียดสินค้า"><div class="ot"><button type="button" data-back aria-label="กลับ"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button><h2>รายละเอียดสินค้า</h2><button class="hc" id="pdc" type="button" aria-label="ตะกร้า"><svg viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.6 12.2a1 1 0 001 .8h9.6a1 1 0 001-.8L21 7H6"/></svg><b id="pdn" hidden>0</b></button></div><div class="ob" id="pdb"></div><div class="oa" id="pda"></div></div>
 
 <!-- ตะกร้า / ชำระเงิน -->
 <div class="ov" id="co" hidden role="dialog" aria-label="ตะกร้าและชำระเงิน"><div class="ot"><button type="button" data-back aria-label="กลับ"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button><h2 id="cot">ตะกร้าสินค้า</h2></div><div class="steps" id="stp"><div>1 ตะกร้า</div><div>2 ที่อยู่</div><div>3 ชำระเงิน</div></div><div class="ob" id="cob"></div><div class="oa" id="coa"></div></div>
+
+<!-- เลือกจำนวนก่อนเพิ่มลงตะกร้า -->
+<div id="sh" hidden role="dialog" aria-label="เลือกจำนวนสินค้า"><div class="shp" id="shb"></div></div>
+
+<!-- ปักหมุดที่อยู่ -->
+<div class="ov" id="pk" hidden role="dialog" aria-label="ปักหมุดที่อยู่"><div class="ot"><button type="button" data-back aria-label="กลับ"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button><h2>ปักหมุดที่อยู่</h2></div>
+<div class="pkw"><div id="pkm"></div><div class="pkx" id="pkx" hidden>โหลดแผนที่ไม่ได้ กด "ใช้ตำแหน่งปัจจุบัน" หรือย้อนกลับไปพิมพ์ที่อยู่แทนได้</div><div class="pkh" id="pkh">เลื่อนแผนที่ให้หมุดตรงกับที่อยู่ของคุณ</div><svg class="pkp" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 23s8-7.6 8-13.5A8 8 0 004 9.500C4 15.400 12 23 12 23z"/><circle cx="12" cy="9.500" r="3"/></svg><button class="pkg" id="pkg" type="button"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>ใช้ตำแหน่งปัจจุบัน</button></div>
+<div class="oa"><button class="btn y" id="pko" type="button" disabled>ยืนยันตำแหน่งนี้</button></div></div>
 
 <div id="lb" hidden role="dialog" aria-label="ดูรูปขยาย"><img alt=""></div>
 <div id="toast" role="status"></div>
@@ -186,13 +211,16 @@ function count(){var n=0;for(var k in cart)n+=cart[k];return n}
 function calc(){var sub=0,pre=0,lines=[];P.forEach(function(x){var q=cart[x.k]||0;if(q){if(st(x)<=0)pre=1;sub+=q*x.p;lines.push({x:x,q:q})}});
  var rl=rule(AR),tb=rl.free<=0||rl.fee<=0&&rl.free>=1e9,free=tb||sub>=rl.free,del=sub&&!free?rl.fee:0;
  return{sub:sub,del:del,tot:sub+del,pre:pre,lines:lines,rl:rl,tb:tb,free:free}}
-var cust=ls("bz-cust")||{},AR=CFG.areas.indexOf(cust.ar)>-1?cust.ar:CFG.areas[0],pos="",cat="",qs="";
+var cust=ls("bz-cust")||{},AR=CFG.areas.indexOf(cust.ar)>-1?cust.ar:CFG.areas[0],cat="",qs="";
+if(cust.pin&&!(typeof cust.pin.lat=="number"&&typeof cust.pin.lng=="number"))delete cust.pin;
+function pinUrl(){return cust.pin?"https://maps.google.com/?q="+cust.pin.lat+","+cust.pin.lng:""}
 /* UI ทั่วไป */
 function toast(m,ms){var t=$("toast");t.textContent=m;t.classList.add("on");clearTimeout(toast.h);toast.h=setTimeout(function(){t.classList.remove("on")},ms||2400)}
 var OVS=[];function openOv(el){el.hidden=false;OVS.push(el);document.body.style.overflow="hidden";history.pushState({ov:OVS.length},"")}
 function closeOv(){var el=OVS.pop();if(el)el.hidden=true;if(!OVS.length)document.body.style.overflow=""}
 function closeAll(){var n=OVS.length;while(OVS.length)closeOv();if(n)history.go(-n)}
-window.addEventListener("popstate",function(e){var d=(e.state&&e.state.ov)||0;while(OVS.length>d)closeOv()});
+window.addEventListener("popstate",function(e){var d=(e.state&&e.state.ov)||0;while(OVS.length>d)closeOv();if(!OVS.length)refresh()});
+function swapOv(el){var o=OVS.pop();if(o)o.hidden=true;el.hidden=false;OVS.push(el)}
 document.addEventListener("click",function(e){var b=e.target.closest("[data-back]");if(b&&OVS.length)history.back()});
 function thumb(x){return x.img?'<img loading="lazy" src="'+esc(x.img)+'" alt="'+esc(x.n)+'">':'<span class="ph0">'+esc(x.n.charAt(0))+'</span>'}
 /* รายการสินค้า */
@@ -203,8 +231,9 @@ function drawGrid(){var q=qs.trim().toLowerCase(),l=P.filter(function(x){return(
  $("grid").innerHTML=l.map(function(x){var ok=st(x)>0,n=cart[x.k]||0,i=P.indexOf(x);
   return'<div class="pc" data-i="'+i+'"><div class="pi">'+thumb(x)+'<div class="tg">'+(x.set?'<span>เซ็ต</span>':'')+(ok?'':'<span class="no">พรีออเดอร์</span>')+'</div></div><div class="pb"><div class="pn">'+esc(x.n)+'</div><div class="pp">'+B(x.p)+'</div><div class="ps">'+(ok?(st(x)<=5?"เหลือ "+st(x)+" ชิ้น":"พร้อมส่ง"):"หมด สั่งล่วงหน้าได้")+'</div></div>'+
   (n?'<div class="qs"><button data-a="dec" aria-label="ลด">−</button><span>'+n+'</span><button data-a="inc" aria-label="เพิ่ม" '+(n>=maxq(x)?"disabled":"")+'>+</button></div>':'<button class="qa" data-a="inc" aria-label="ใส่ตะกร้า"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>')+'</div>'}).join("")||'<div class="empty" style="grid-column:1/-1">ไม่พบสินค้าที่ค้นหา</div>'}
+var lastN=0;
 function setQty(x,q){q=Math.max(0,Math.min(q,maxq(x)));if(q)cart[x.k]=q;else delete cart[x.k];saveCart();refresh()}
-function refresh(){drawGrid();var n=count(),c=calc();$("hb").hidden=!n;$("hb").textContent=n;$("cb").hidden=!n||!!OVS.length;$("cbn").textContent=n+" ชิ้นในตะกร้า";$("cbs").textContent=B(c.sub);
+function refresh(){drawGrid();var n=count(),c=calc();["hb","pdn"].forEach(function(i){var e=$(i);e.hidden=!n;e.textContent=n;if(n>lastN){e.classList.remove("bump");void e.offsetWidth;e.classList.add("bump")}});lastN=n;$("cb").hidden=!n||!!OVS.length;$("cbn").textContent=n+" ชิ้นในตะกร้า";$("cbs").textContent=B(c.sub);
  if(!$("co").hidden)drawCo();if(!$("pd").hidden)drawPdAct()}
 $("grid").addEventListener("click",function(e){var pc=e.target.closest(".pc");if(!pc)return;var x=P[+pc.dataset.i],a=e.target.closest("[data-a]");
  if(a){e.stopPropagation();setQty(x,(cart[x.k]||0)+(a.dataset.a=="inc"?1:-1));return}openPd(x)});
@@ -218,18 +247,29 @@ function openPd(x){cur=x;pq=1;var g=[x.img].concat(x.imgs).filter(Boolean),ok=st
  (x.set?'<div class="dd"><h3>สินค้าในเซ็ต</h3>'+esc(inc(x)).replace(/ \+ /g,"\n")+'</div>':'')+(x.d?'<div class="dd"><h3>รายละเอียดสินค้า</h3>'+esc(x.d)+'</div>':'');
  var gs=$("gs");gs.onscroll=function(){var d=$("dots");if(!d)return;var i=Math.round(gs.scrollLeft/gs.clientWidth);[].forEach.call(d.children,function(c,j){c.classList.toggle("on",j==i)})};
  $("pdb").scrollTop=0;drawPdAct();if($("pd").hidden)openOv($("pd"));$("cb").hidden=true}
-function drawPdAct(){var x=cur,m=maxq(x),inCart=cart[x.k]||0;pq=Math.max(1,Math.min(pq,m));
- $("pda").innerHTML='<div class="stp"><button data-p="-1" '+(pq<=1?"disabled":"")+' aria-label="ลด">−</button><span>'+pq+'</span><button data-p="1" '+(pq>=m?"disabled":"")+' aria-label="เพิ่ม">+</button></div><button class="btn o" data-p="cart">ใส่ตะกร้า'+(inCart?" ("+inCart+")":"")+'</button><button class="btn y" data-p="buy">'+(st(x)>0?"ซื้อเลย":"สั่งล่วงหน้า")+'</button>'}
-$("pda").addEventListener("click",function(e){var b=e.target.closest("[data-p]");if(!b)return;var v=b.dataset.p;
- if(v=="-1"||v=="1"){pq+=+v;drawPdAct();return}
+function buyLabel(x){return st(x)>0?"ซื้อเลย":"สั่งล่วงหน้า"}
+function drawPdAct(){var x=cur;
+ $("pda").innerHTML='<a class="btn o chat" target="_blank" rel="noopener" href="https://line.me/R/ti/p/'+esc(OA)+'" aria-label="แชทถามร้านทาง LINE"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 01-11.5 7.2L4 20l1-4.5A8 8 0 1121 12z"/></svg></a><button class="btn o" data-p="cart"><svg viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.6 12.2a1 1 0 001 .8h9.6a1 1 0 001-.8L21 7H6"/></svg>เพิ่มลงตะกร้า</button><button class="btn y" data-p="buy">'+buyLabel(x)+'</button>'}
+$("pda").addEventListener("click",function(e){var b=e.target.closest("[data-p]");if(!b)return;var v=b.dataset.p,room=maxq(cur)-(cart[cur.k]||0);
+ if(room<=0){if(v=="buy")openCo(1);else toast("มีในตะกร้าครบจำนวนที่สั่งได้แล้ว");return}
+ shm=v;pq=1;drawSheet();openOv($("sh"))});
+/* แผ่นเลือกจำนวน */
+var shm="cart";
+function drawSheet(){var x=cur,inCart=cart[x.k]||0,room=maxq(x)-inCart;pq=Math.max(1,Math.min(pq,room));
+ $("shb").innerHTML='<div class="shh"><div class="pi">'+thumb(x)+'</div><div><div class="pp">'+B(x.p)+'</div><div class="ps">'+(st(x)>0?"มีสินค้า "+st(x)+" ชิ้น":"สั่งล่วงหน้า")+(inCart?" · ในตะกร้าแล้ว "+inCart:"")+'</div></div><button class="shx" type="button" data-back aria-label="ปิด"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>'+
+ '<div class="shq"><span>จำนวน</span><div class="stp"><button type="button" data-q="-1" '+(pq<=1?"disabled":"")+' aria-label="ลด">−</button><span>'+pq+'</span><button type="button" data-q="1" '+(pq>=room?"disabled":"")+' aria-label="เพิ่ม">+</button></div></div>'+
+ '<button class="btn y" type="button" data-q="ok">'+(shm=="buy"?buyLabel(x):"เพิ่มลงตะกร้า")+'</button>'}
+$("shb").addEventListener("click",function(e){var b=e.target.closest("[data-q]");if(!b)return;var v=b.dataset.q;
+ if(v!="ok"){pq+=+v;drawSheet();return}
  setQty(cur,(cart[cur.k]||0)+pq);
- if(v=="cart"){toast("ใส่ตะกร้าแล้ว");pq=1;drawPdAct();return}
- openCo(1)});
+ if(shm=="buy"){step=1;drawCo();swapOv($("co"));return}
+ history.back();toast("✓ เพิ่มลงตะกร้าแล้ว")});
+$("sh").addEventListener("click",function(e){if(e.target===this)history.back()});
 $("pdb").addEventListener("click",function(e){var z=e.target.closest("[data-z]");if(z){$("lb").querySelector("img").src=z.src;$("lb").hidden=false}});
 /* ตะกร้า / ชำระเงิน */
 var step=1;
 function openCo(s){step=s||1;drawCo();if($("co").hidden)openOv($("co"));$("cb").hidden=true}
-$("hc").onclick=$("cbb").onclick=function(){if(!count()){toast("ยังไม่มีสินค้าในตะกร้า");return}openCo(1)};
+$("hc").onclick=$("cbb").onclick=$("pdc").onclick=function(){if(!count()){toast("ยังไม่มีสินค้าในตะกร้า");return}openCo(1)};
 function rowLines(c){return c.lines.map(function(l){return'<div class="row"><span>'+esc(l.x.n)+' ×'+l.q+'</span><span>'+B(l.q*l.x.p)+'</span></div>'}).join("")}
 function ship(c){return c.tb?AR+" ส่งฟรี":c.rl.free>=1e9?AR+" ค่าส่ง "+B(c.rl.fee):!c.sub?"ซื้อครบ "+B(c.rl.free)+" ส่งฟรี":c.free?"ได้ส่งฟรีแล้ว":"ซื้อเพิ่มอีก "+B(c.rl.free-c.sub)+" ส่งฟรี"}
 function totals(c){return'<div class="pad"><div class="note">'+esc(ship(c))+'</div><div class="bar"><i style="width:'+(c.tb?100:c.rl.free>=1e9?0:Math.min(100,c.sub/c.rl.free*100))+'%"></i></div>'+
@@ -243,9 +283,9 @@ function drawCo(){var c=calc(),b=$("cob"),a=$("coa");[].forEach.call($("stp").ch
   '<label for="ph">เบอร์โทรที่ติดต่อได้</label><input type="tel" id="ph" inputmode="numeric" placeholder="08x xxx xxxx" autocomplete="tel" value="'+esc(cust.ph||"")+'"><div class="er" id="e_ph"></div>'+
   '<label for="ar">อำเภอ</label><select id="ar">'+CFG.areas.map(function(x){return'<option'+(x===AR?" selected":"")+'>'+esc(x)+'</option>'}).join("")+'</select>'+
   '<label for="pl">สถานที่รับของ</label><textarea id="pl" rows="3" placeholder="เช่น บ้านเลขที่ หมู่บ้าน ตำบล หรือจุดนัด เช่น หน้าปากซอย">'+esc(cust.pl||"")+'</textarea><div class="er" id="e_pl"></div>'+
-  '<button class="btn o sm" id="loc" type="button" style="margin-top:8px">แนบพิกัดของฉัน</button> <span class="note" id="locs">'+(pos?"แนบพิกัดแล้ว":"")+'</span></div>'+totals(c);
+  '<label>ตำแหน่งบนแผนที่ <span class="note" style="font-weight:400">(ช่วยให้ร้านหาเจอง่ายขึ้น)</span></label>'+(cust.pin?'<div class="pinc"><svg viewBox="0 0 24 24"><path d="M12 22s7-6.700 7-12a7 7 0 00-14 0c0 5.300 7 12 7 12z"/><circle cx="12" cy="10" r="2.500"/></svg><div class="t"><b>ปักหมุดแล้ว</b><div><a target="_blank" rel="noopener" href="'+esc(pinUrl())+'">ดูแผนที่</a><button class="lk" type="button" id="pin">แก้ไขหมุด</button><button class="lk" type="button" id="pinx">ลบหมุด</button></div></div></div>':'<button class="pinb" type="button" id="pin"><svg viewBox="0 0 24 24"><path d="M12 22s7-6.700 7-12a7 7 0 00-14 0c0 5.300 7 12 7 12z"/><circle cx="12" cy="10" r="2.500"/></svg>ปักหมุดที่อยู่บนแผนที่</button>')+'</div>'+totals(c);
   a.innerHTML='<button class="btn o" data-s="1" style="flex:0 0 100px;white-space:nowrap">ย้อนกลับ</button><button class="btn y" data-s="3">ถัดไป: ชำระเงิน</button>'}
- else{b.innerHTML='<div class="pad"><div style="background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px"><b>ผู้รับ</b><div class="note">'+esc(cust.nm||"")+' · '+esc(cust.ph||"")+'<br>'+esc(AR)+' · '+esc(cust.pl||"")+'</div></div></div><div class="pad" style="padding-top:0">'+rowLines(c)+'</div>'+totals(c)+
+ else{b.innerHTML='<div class="pad"><div style="background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px"><b>ผู้รับ</b><div class="note">'+esc(cust.nm||"")+' · '+esc(cust.ph||"")+'<br>'+esc(AR)+' · '+esc(cust.pl||"")+(cust.pin?'<br>ปักหมุดแล้ว · <a target="_blank" rel="noopener" href="'+esc(pinUrl())+'">ดูแผนที่</a>':'')+'</div></div></div><div class="pad" style="padding-top:0">'+rowLines(c)+'</div>'+totals(c)+
   '<div class="pad"><h3 style="font-size:16px">ชำระเงินด้วยพร้อมเพย์</h3><p class="note" style="margin:2px 0 10px">โอนพร้อมเพย์แล้วส่งสลิปในแชท LINE ร้านจะจัดส่งทันทีที่ได้รับยอด</p><div class="qr"><button type="button" class="qrimg" id="qrb" aria-label="ขยาย QR Code"><img src="'+esc(im(S.qrImg)||"assets/promptpay-qr.jpg")+'" alt="QR พร้อมเพย์" width="130" height="160"></button><div class="note">พร้อมเพย์ '+esc(PP)+'<br>สแกนจ่าย แล้วส่งสลิปในแชท LINE<br><button class="btn o sm" id="cp" type="button" style="margin-top:8px">คัดลอกเลขพร้อมเพย์</button></div></div><p class="note">กดส่งแล้วแอป LINE จะเปิดพร้อมข้อความออเดอร์ กดส่งอีกหนึ่งครั้งเพื่อยืนยัน</p></div>';
   a.innerHTML='<button class="btn o" data-s="2" style="flex:0 0 100px;white-space:nowrap">ย้อนกลับ</button><button class="btn g" id="go">ส่งออเดอร์เข้า LINE ร้าน</button>'}
  b.scrollTop=0}
@@ -254,12 +294,31 @@ function chk(id,ok,msg){var e=$(id);if(e)e.classList.toggle("bad",!ok);var m=$("
 $("cob").addEventListener("click",function(e){var l=e.target.closest("[data-l]");if(l){var x=P.filter(function(p){return p.k===l.dataset.l})[0],d=l.dataset.d;setQty(x,d=="x"?0:(cart[x.k]||0)+ +d);return}
  if(e.target.closest("#qrb")){$("lb").querySelector("img").src=e.target.closest("#qrb").querySelector("img").src;$("lb").hidden=false}
  if(e.target.closest("#cp")){var t=PP.replace(/\D/g,"");try{navigator.clipboard.writeText(t).then(function(){toast("คัดลอกเลขพร้อมเพย์แล้ว")},function(){toast("เลขพร้อมเพย์คือ "+PP)})}catch(x){toast("เลขพร้อมเพย์คือ "+PP)}}
- if(e.target.closest("#loc")){if(!navigator.geolocation){toast("เครื่องนี้ไม่รองรับพิกัด");return}$("locs").textContent="กำลังหาตำแหน่ง...";navigator.geolocation.getCurrentPosition(function(g){pos="https://maps.google.com/?q="+g.coords.latitude.toFixed(6)+","+g.coords.longitude.toFixed(6);$("locs").textContent="แนบพิกัดแล้ว"},function(){$("locs").textContent="ไม่ได้รับสิทธิ์ตำแหน่ง พิมพ์สถานที่แทนได้"},{timeout:10000})}});
+ if(e.target.closest("#pin"))openPicker();
+ if(e.target.closest("#pinx")){readCust();delete cust.pin;ls("bz-cust",cust);drawCo();toast("ลบหมุดแล้ว")}});
 $("cob").addEventListener("change",function(e){if(e.target.id=="ar"){readCust();drawCo()}});
 $("coa").addEventListener("click",function(e){var s=e.target.closest("[data-s]");if(s){var n=+s.dataset.s;
   if(step==2&&n==3){readCust();var ok=[chk("nm",cust.nm.length>=2,"กรอกชื่อผู้รับ"),chk("ph",/^0[689]\d{8}$/.test(cust.ph)||/^0[2-7]\d{7}$/.test(cust.ph),"กรอกเบอร์ให้ถูกต้อง เช่น 0812345678"),chk("pl",cust.pl.length>=5,"ระบุสถานที่รับของ")];if(ok.indexOf(false)>-1){toast("ตรวจสอบข้อมูลที่ขึ้นสีแดง");return}}
   if(step==2&&n==1)readCust();step=n;drawCo();return}
  if(e.target.closest("#go"))send()});
+/* ปักหมุดที่อยู่: หมุดอยู่กลางจอ ลูกค้าเลื่อนแผนที่ใต้หมุด (โหลด Leaflet เฉพาะตอนเปิด) */
+var MAPC=[17.3588,103.1075],lmap=null,pick=null,moved=false;
+function loadMap(done){if(window.L){done(true);return}
+ var c=document.createElement("link");c.rel="stylesheet";c.href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css";c.integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=";c.crossOrigin="anonymous";document.head.appendChild(c);
+ var s=document.createElement("script");s.src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js";s.integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=";s.crossOrigin="anonymous";s.onload=function(){done(!!window.L)};s.onerror=function(){done(false)};document.head.appendChild(s)}
+function drawPk(){$("pko").disabled=!(moved&&pick)}
+function openPicker(){readCust();pick=cust.pin?{lat:cust.pin.lat,lng:cust.pin.lng}:null;moved=!!pick;$("pkx").hidden=true;drawPk();openOv($("pk"));
+ loadMap(function(ok){if($("pk").hidden)return;if(!ok){$("pkx").hidden=false;return}
+  var c=pick?[pick.lat,pick.lng]:MAPC,z=pick?18:15;
+  if(lmap){lmap.invalidateSize();lmap.setView(c,z,{animate:false});return}
+  lmap=L.map("pkm").setView(c,z);
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"&copy; OpenStreetMap"}).addTo(lmap);
+  lmap.on("dragstart",function(){moved=true});
+  lmap.on("move",function(){if(!moved)return;var m=lmap.getCenter();pick={lat:+m.lat.toFixed(6),lng:+m.lng.toFixed(6)};drawPk()});
+  setTimeout(function(){lmap.invalidateSize()},60)})}
+$("pkg").onclick=function(){if(!navigator.geolocation){toast("เครื่องนี้ไม่รองรับการหาตำแหน่ง");return}toast("กำลังหาตำแหน่ง...");
+ navigator.geolocation.getCurrentPosition(function(g){pick={lat:+g.coords.latitude.toFixed(6),lng:+g.coords.longitude.toFixed(6)};moved=true;if(lmap)lmap.setView([pick.lat,pick.lng],18);drawPk();toast("เจอตำแหน่งแล้ว เลื่อนแผนที่ปรับหมุดได้")},function(){toast("ไม่ได้รับสิทธิ์ตำแหน่ง เลื่อนแผนที่เองได้")},{enableHighAccuracy:true,timeout:10000})};
+$("pko").onclick=function(){if(!pick)return;cust.pin={lat:pick.lat,lng:pick.lng};ls("bz-cust",cust);drawCo();history.back();toast("✓ ปักหมุดแล้ว")};
 /* ส่งออเดอร์ */
 function orderDlg(txt){var d=document.getElementById("odlg");if(d)d.remove();d=document.createElement("div");d.id="odlg";d.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:70;display:flex;align-items:center;justify-content:center;padding:16px";
  var b=document.createElement("div");b.style.cssText="background:var(--card);color:var(--ink);border-radius:14px;max-width:460px;width:100%;max-height:90vh;overflow:auto;padding:18px";
@@ -272,14 +331,14 @@ function orderDlg(txt){var d=document.getElementById("odlg");if(d)d.remove();d=d
  var x=document.createElement("button");x.type="button";x.className="btn o";x.textContent="ปิด";x.style.marginTop="8px";x.onclick=function(){d.remove()};
  b.append(h,p,t,c,a,x);d.appendChild(b);d.onclick=function(e){if(e.target===d)d.remove()};document.body.appendChild(d)}
 function send(){var t=calc();if(!t.lines.length)return;
- var L=["สั่งซื้อ "+SN,"ชื่อ: "+cust.nm,"โทร: "+cust.ph,"อำเภอ: "+AR,"สถานที่รับของ: "+cust.pl];if(pos)L.push("พิกัด: "+pos);L.push("--");
+ var L=["สั่งซื้อ "+SN,"ชื่อ: "+cust.nm,"โทร: "+cust.ph,"อำเภอ: "+AR,"สถานที่รับของ: "+cust.pl];if(cust.pin)L.push("พิกัด: "+pinUrl());L.push("--");
  var oi=[];t.lines.forEach(function(l){var x=l.x,q=l.q;L.push(x.n+" ×"+q+" = "+B(q*x.p)+(st(x)>0?"":" (พรีออเดอร์)")+(x.set?" [เซ็ต: "+inc(x)+"]":""));oi.push({id:x.id,q:q})});
  t.lines.forEach(function(l){var x=l.x,q=l.q;if(st(x)>0){if(x.set)x.set.forEach(function(c){var p=pid(c.id);if(p)p.s=Math.max(0,p.s-q*c.q)});else x.s=Math.max(0,x.s-q)}});
  L.push("--","ค่าสินค้า "+B(t.sub),"ค่าส่ง "+(t.del?B(t.del):"ฟรี"),"ยอดสุทธิ "+B(t.tot),"ชำระ: พร้อมเพย์ (จ่ายก่อน)");
- try{fetch("/api/orders",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({action:"create",name:cust.nm,phone:cust.ph,area:AR,place:cust.pl,items:oi}),keepalive:true}).then(function(r){return r.json()}).then(function(j){if(j&&j.id){var o=ls("bz-orders")||[];o.unshift({id:j.id,t:Date.now()});ls("bz-orders",o.slice(0,20))}}).catch(function(){})}catch(e){}
+ try{fetch("/api/orders",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({action:"create",name:cust.nm,phone:cust.ph,area:AR,place:cust.pl,pin:cust.pin||null,items:oi}),keepalive:true}).then(function(r){return r.json()}).then(function(j){if(j&&j.id){var o=ls("bz-orders")||[];o.unshift({id:j.id,t:Date.now()});ls("bz-orders",o.slice(0,20))}}).catch(function(){})}catch(e){}
  var txt=L.join("\n"),url="https://line.me/R/oaMessage/"+OA+"/?"+encodeURIComponent(txt);
  try{navigator.clipboard&&navigator.clipboard.writeText(txt).catch(function(){})}catch(e){}
- cart={};saveCart();pos="";closeAll();setTimeout(function(){refresh();view("o")},60);
+ cart={};saveCart();closeAll();setTimeout(function(){refresh();view("o")},60);
  if(!/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){orderDlg(txt);return}
  var w=null;try{w=window.open(url,"_blank")}catch(e){}if(!w)location.href=url;
  toast("เปิด LINE แล้ว กดส่งข้อความเพื่อยืนยันออเดอร์",5000)}

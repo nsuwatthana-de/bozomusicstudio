@@ -17,11 +17,25 @@ function checkPw(given) {
   const b = Buffer.from(want);
   return a.length === b.length && timingSafeEqual(a, b);
 }
-const STATUS = ["new", "paid", "cancel"];
+const STATUS = ["new", "paid", "done", "cancel"];
+const ID_RE = /^order-\d{13}-[0-9a-f]{6,16}$/;
 const clip = (s, n) => String(s == null ? "" : s).slice(0, n);
 
 export default async (req) => {
   const store = getStore("bozo");
+
+  // ลูกค้าดูสถานะออเดอร์ของตัวเอง: ต้องรู้รหัสออเดอร์ (เก็บในเครื่องลูกค้า) และคืนเฉพาะข้อมูลไม่ส่วนตัว
+  if (req.method === "GET") {
+    const ids = String(new URL(req.url).searchParams.get("ids") || "")
+      .split(",").filter((i) => ID_RE.test(i)).slice(0, 20);
+    const got = await Promise.all(ids.map((i) => store.get(i, { type: "json" })));
+    return json({
+      orders: got.filter(Boolean).map((o) => ({
+        id: o.id, t: o.t, status: o.status, sub: o.sub, del: o.del, tot: o.tot,
+        items: (o.items || []).map((x) => ({ n: x.n, q: x.q })),
+      })),
+    });
+  }
 
   if (req.method === "POST") {
     const text = await req.text();
@@ -53,7 +67,7 @@ export default async (req) => {
       const free = r.free <= 0 || (r.fee <= 0 && r.free >= 1e9) || sub >= r.free;
       const del = free ? 0 : +r.fee || 0;
       const t = Date.now();
-      const id = "order-" + String(t).padStart(13, "0") + "-" + randomBytes(3).toString("hex");
+      const id = "order-" + String(t).padStart(13, "0") + "-" + randomBytes(6).toString("hex");
       const order = {
         id, t, name: clip(b.name, 80), phone: clip(b.phone, 20), area, place: clip(b.place, 300),
         items, sub, del, tot: sub + del, cost, status: "new",
@@ -79,7 +93,7 @@ export default async (req) => {
       }
       return json({ orders: out });
     }
-    if (typeof b.id !== "string" || !/^order-\d{13}-[0-9a-f]{6}$/.test(b.id)) return json({ error: "bad_id" }, 400);
+    if (typeof b.id !== "string" || !ID_RE.test(b.id)) return json({ error: "bad_id" }, 400);
     if (b.action === "status" && STATUS.includes(b.status)) {
       const o = await store.get(b.id, { type: "json", consistency: "strong" });
       if (!o) return json({ error: "not_found" }, 404);

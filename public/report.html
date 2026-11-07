@@ -31,7 +31,7 @@ details{margin-top:24px}summary{cursor:pointer;color:var(--mute);font-size:14px}
 <div class="tabs" id="tb"><button class="btn o on" data-m="d">รายวัน</button><button class="btn o" data-m="w">รายสัปดาห์</button><button class="btn o" data-m="m">รายเดือน</button></div>
 <div class="kp" id="kp"></div>
 <div class="tw"><table id="tt"></table></div>
-<p class="note" style="margin-top:8px">นับเฉพาะออเดอร์สถานะ "ชำระแล้ว" · กำไร = ค่าสินค้า − ต้นทุน (ไม่รวมค่าส่ง) · ต้องกรอกราคาต้นทุนในหน้าจัดการสินค้าเพื่อให้กำไรถูกต้อง</p>
+<p class="note" style="margin-top:8px">นับเฉพาะออเดอร์สถานะ "ชำระแล้ว" และ "ส่งของแล้ว" · กำไร = ค่าสินค้า − ต้นทุน (ไม่รวมค่าส่ง) · ต้องกรอกราคาต้นทุนในหน้าจัดการสินค้าเพื่อให้กำไรถูกต้อง</p>
 <h2>สินค้าขายดี</h2><div class="tw"><table id="tp"></table></div>
 <h2>ออเดอร์ล่าสุด</h2><p class="s">ลูกค้าส่งออเดอร์แล้ว เมื่อได้รับเงินให้เปลี่ยนสถานะเป็น "ชำระแล้ว" ยอดจึงเข้ารายงาน</p><div id="ol"></div>
 </main><div id="msg" role="status"></div>
@@ -48,7 +48,7 @@ function key(t,m){var d=new Date(t+H);if(m=="m")return ds(d).slice(0,7);if(m=="w
 function label(k,m){if(m=="m")return new Date(k+"-01T00:00:00Z").toLocaleDateString("th-TH",{month:"long",year:"numeric",timeZone:"UTC"});var d=new Date(k+"T00:00:00Z");var s=d.toLocaleDateString("th-TH",{day:"numeric",month:"short",timeZone:"UTC"});if(m=="w"){var e=new Date(d.getTime()+6*864e5);return s+" – "+e.toLocaleDateString("th-TH",{day:"numeric",month:"short",timeZone:"UTC"})}return s}
 function periods(m){var n=m=="d"?14:12,out=[],now=Date.now();for(var i=0;i<n;i++){var t=now-(m=="d"?i*864e5:m=="w"?i*7*864e5:0),k;if(m=="m"){var d=new Date(now+H);d.setUTCDate(1);d.setUTCMonth(d.getUTCMonth()-i);k=ds(d).slice(0,7)}else k=key(t,m);out.push(k)}return out}
 function draw(){var ps=periods(mode),A={};ps.forEach(function(k){A[k]={n:0,sub:0,del:0,cost:0}});var prod={};
- O.forEach(function(o){if(o.status!="paid")return;var k=key(o.t,mode),a=A[k];if(!a)return;a.n++;a.sub+=o.sub;a.del+=o.del;a.cost+=o.cost||0;(o.items||[]).forEach(function(it){var p=prod[it.n]||(prod[it.n]={q:0,s:0,c:0});p.q+=it.q;p.s+=it.q*it.p;p.c+=it.q*(it.c||0)})});
+ O.forEach(function(o){if(o.status!="paid"&&o.status!="done")return;var k=key(o.t,mode),a=A[k];if(!a)return;a.n++;a.sub+=o.sub;a.del+=o.del;a.cost+=o.cost||0;(o.items||[]).forEach(function(it){var p=prod[it.n]||(prod[it.n]={q:0,s:0,c:0});p.q+=it.q;p.s+=it.q*it.p;p.c+=it.q*(it.c||0)})});
  var T={n:0,sub:0,del:0,cost:0},h='<tr><th>ช่วง</th><th>ออเดอร์</th><th>ยอดขาย</th><th>ค่าส่ง</th><th>ต้นทุน</th><th>กำไร</th></tr>';
  ps.forEach(function(k){var a=A[k];for(var f in T)T[f]+=a[f];h+='<tr><td>'+label(k,mode)+'</td><td>'+a.n+'</td><td>'+B(a.sub)+'</td><td>'+B(a.del)+'</td><td>'+B(a.cost)+'</td><td class="g">'+B(a.sub-a.cost)+'</td></tr>'});
  $("tt").innerHTML=h;
@@ -56,8 +56,8 @@ function draw(){var ps=periods(mode),A={};ps.forEach(function(k){A[k]={n:0,sub:0
  var pl=Object.keys(prod).sort(function(a,b){return prod[b].q-prod[a].q}).slice(0,10),r='<tr><th>สินค้า</th><th>จำนวน</th><th>ยอดขาย</th><th>กำไร</th></tr>';
  r+=pl.map(function(n){var p=prod[n];return'<tr><td>'+esc(n)+'</td><td>'+p.q+'</td><td>'+B(p.s)+'</td><td class="g">'+B(p.s-p.c)+'</td></tr>'}).join("")||'<tr><td colspan="4" class="note" style="text-align:left">ยังไม่มีออเดอร์ที่ชำระแล้วในช่วงนี้</td></tr>';
  $("tp").innerHTML=r;
- var SL={new:"รอยืนยัน",paid:"ชำระแล้ว",cancel:"ยกเลิก"};
- $("ol").innerHTML=O.slice(0,40).map(function(o){var d=new Date(o.t+H).toISOString().replace("T"," ").slice(0,16);return'<div class="card od" data-id="'+o.id+'"><div><b>'+esc(o.name)+'</b> · '+esc(o.phone)+'<div class="note">'+d+' · '+esc(o.area)+' · '+(o.items||[]).map(function(i){return esc(i.n)+' ×'+i.q}).join(", ")+'</div></div><div style="text-align:right"><b>'+B(o.tot)+'</b></div><select data-s>'+["new","paid","cancel"].map(function(s){return'<option value="'+s+'"'+(o.status==s?' selected':'')+'>'+SL[s]+'</option>'}).join("")+'</select><div style="text-align:right"><button class="btn d" data-del type="button">ลบ</button></div></div>'}).join("")||'<p class="note">ยังไม่มีออเดอร์ (ออเดอร์ใหม่จะขึ้นเมื่อลูกค้ากดส่งออเดอร์จากหน้าร้าน)</p>'}
+ var SL={new:"รอยืนยัน",paid:"ชำระแล้ว",done:"ส่งของแล้ว",cancel:"ยกเลิก"};
+ $("ol").innerHTML=O.slice(0,40).map(function(o){var d=new Date(o.t+H).toISOString().replace("T"," ").slice(0,16);return'<div class="card od" data-id="'+o.id+'"><div><b>'+esc(o.name)+'</b> · '+esc(o.phone)+'<div class="note">'+d+' · '+esc(o.area)+' · '+(o.items||[]).map(function(i){return esc(i.n)+' ×'+i.q}).join(", ")+'</div></div><div style="text-align:right"><b>'+B(o.tot)+'</b></div><select data-s>'+["new","paid","done","cancel"].map(function(s){return'<option value="'+s+'"'+(o.status==s?' selected':'')+'>'+SL[s]+'</option>'}).join("")+'</select><div style="text-align:right"><button class="btn d" data-del type="button">ลบ</button></div></div>'}).join("")||'<p class="note">ยังไม่มีออเดอร์ (ออเดอร์ใหม่จะขึ้นเมื่อลูกค้ากดส่งออเดอร์จากหน้าร้าน)</p>'}
 function load(){return api({action:"list"}).then(function(x){if(x.ok){O=x.j.orders||[];$("lg").hidden=true;$("ed").hidden=false;draw();return}
  try{sessionStorage.removeItem("bz-pw")}catch(e){}window.__pw="";$("ed").hidden=true;$("lg").hidden=false;$("lm").textContent=x.s==401?(PW()?"":"")+"รหัสผ่านไม่ถูกต้อง":x.s==503?"ยังไม่ได้ตั้ง ADMIN_PASSWORD ใน Netlify":"โหลดไม่สำเร็จ ("+(x.j.error||x.s)+")"}).catch(function(){$("lg").hidden=false;$("lm").textContent="เชื่อมต่อไม่ได้"})}
 $("lf").onsubmit=function(e){e.preventDefault();var v=$("lp").value;if(!v)return;try{sessionStorage.setItem("bz-pw",v)}catch(x){window.__pw=v}load()};

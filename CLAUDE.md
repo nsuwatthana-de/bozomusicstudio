@@ -3,19 +3,19 @@
 ร้านขายอุปกรณ์ดนตรี (สายกีตาร์/เบส คาโป ปิ๊ก ฯลฯ) ของครูสอนดนตรีที่ หนองหาน อุดรธานี (ใกล้โรงเรียนหนองหานวิทยา)  ภาษาหน้าเว็บ/ข้อความทั้งหมดเป็นภาษาไทย  โดเมนปลายทาง bozomusic.com (Netlify, deploy จาก branch main ของ repo นี้)
 
 ## โครงสร้าง
-- `public/index.html` หน้าร้านลูกค้า (JS ล้วน ไม่มี build) — โหลดข้อมูลจาก `/api/shop` ถ้าไม่ได้ใช้ `public/data.js` เป็นข้อมูลตั้งต้น
+- `public/index.html` หน้าร้านลูกค้าแบบแอป (สไตล์ Shopee: กริดสินค้า ค้นหา หมวดหมู่ หน้ารายละเอียด ตะกร้าแถบล่าง ชำระเงิน 3 ขั้น ออเดอร์ของฉัน) JS ล้วน ไม่มี build — โหลดข้อมูลจาก `/api/shop` ถ้าไม่ได้ใช้ `public/data.js` เป็นข้อมูลตั้งต้น  ·  ตะกร้า/ข้อมูลผู้รับ/รหัสออเดอร์เก็บใน localStorage (`bz-cart`, `bz-cust`, `bz-orders`)  ·  `public/manifest.webmanifest` ติดตั้งเป็นแอปลูกค้า, `public/admin.webmanifest` แอปหลังบ้าน
 - `public/admin.html` หน้าหลังบ้าน (ล็อกอินด้วยรหัสผ่าน) แก้สินค้า/สต็อก/เซ็ต/ค่าส่งรายอำเภอ/ข้อความ/รูป/COMING SOON แล้วกด "บันทึกและเผยแพร่"
 - `public/report.html` รายงานยอดขาย รายวัน/สัปดาห์/เดือน + จัดการสถานะออเดอร์
 - `netlify/functions/shop.mjs` `/api/shop` GET สาธารณะ (ตัดต้นทุน `c` ออก) / POST แอดมิน
-- `netlify/functions/orders.mjs` `/api/orders` ลูกค้า POST action=create (คำนวณราคา ต้นทุน ค่าส่งฝั่งเซิร์ฟเวอร์) ส่วน list/status/delete ต้องเป็นแอดมิน
+- `netlify/functions/orders.mjs` `/api/orders` ลูกค้า POST action=create (คำนวณราคา ต้นทุน ค่าส่งฝั่งเซิร์ฟเวอร์) · GET ?ids= ลูกค้าดูสถานะออเดอร์ตัวเอง (ไม่คืนชื่อ/เบอร์/ที่อยู่) · list/status/delete ต้องเป็นแอดมิน · สถานะ: new, paid, done, cancel (รายงานนับ paid+done)
 - `netlify/functions/img.mjs` `/api/img` อัปโหลด/เสิร์ฟรูป (Netlify Blobs)
 - ข้อมูลเก็บใน Netlify Blobs store ชื่อ `bozo` (key `shop`, `order-<ts>-<hex>`, `img-<hex>`)
 - แอดมินส่งรหัสผ่านทาง header `x-admin-password` เทียบกับ env `ADMIN_PASSWORD` (ต้องตั้งใน Netlify scope ที่รวม Functions)
 
 ## โมเดลข้อมูล (window.SHOP)
-`lineOA, promptpay, studioUrl, text{shopName,headline,checkinText,mapQuery,soonTitle,soonText,soonOff}, soon[{id,n,img}], qrImg, logoImg, delivery{areas,rules{อำเภอ:{fee,free}}}, products[{id,n,p,s,c,img,set:[{id,q}]}]`
+`lineOA, promptpay, studioUrl, text{shopName,headline,checkinText,mapQuery,soonTitle,soonText,soonOff}, soon[{id,n,img}], qrImg, logoImg, delivery{areas,rules{อำเภอ:{fee,free}}}, products[{id,n,p,s,c,cat,d,img,imgs[],set:[{id,q}]}]`
 - `free: 0` = ส่งฟรีเสมอ, `free: 1e9` = ไม่มียอดส่งฟรี  ·  `c` = ราคาต้นทุน (ห้ามหลุดไปหน้าร้าน)  ·  สต็อกของเซ็ต = min(floor(comp.s/q))
-- สต็อก 0 = เปิดพรีออเดอร์  ·  ชำระด้วยพร้อมเพย์เท่านั้น  ·  สั่งซื้อผ่าน LINE OA (@313dgcyl)
+- `cat` หมวดหมู่ (ตัวกรองหน้าร้าน), `d` คำอธิบาย, `imgs` รูปเพิ่ม ≤5 (รูปหลักคือ `img`)  ·  สต็อก 0 = เปิดพรีออเดอร์  ·  ชำระด้วยพร้อมเพย์เท่านั้น  ·  สั่งซื้อผ่าน LINE OA (@313dgcyl)
 
 ## รันในเครื่อง
 ```

@@ -33,7 +33,7 @@ details{margin-top:24px}summary{cursor:pointer;color:var(--mute);font-size:14px}
 <div class="tw"><table id="tt"></table></div>
 <p class="note" style="margin-top:8px">นับเฉพาะออเดอร์สถานะ "ชำระแล้ว" และ "ส่งของแล้ว" · กำไร = ค่าสินค้า − ต้นทุน (ไม่รวมค่าส่ง) · ต้องกรอกราคาต้นทุนในหน้าจัดการสินค้าเพื่อให้กำไรถูกต้อง</p>
 <h2>สินค้าขายดี</h2><div class="tw"><table id="tp"></table></div>
-<h2>ออเดอร์ล่าสุด</h2><p class="s">ลูกค้าส่งออเดอร์แล้ว เมื่อได้รับเงินให้เปลี่ยนสถานะเป็น "ชำระแล้ว" ยอดจึงเข้ารายงาน</p><div id="ol"></div>
+<h2>ออเดอร์ล่าสุด</h2><p class="s">ลูกค้าส่งออเดอร์แล้ว เมื่อได้รับเงินให้เปลี่ยนสถานะเป็น "ชำระแล้ว" ยอดจึงเข้ารายงาน และระบบจะตัดสต็อกสินค้าให้อัตโนมัติ (ยกเลิกออเดอร์แล้วสต็อกจะคืน)</p><div id="ol"></div>
 </main><div id="msg" role="status"></div>
 <script>
 (function(){
@@ -63,7 +63,7 @@ function load(){return api({action:"list"}).then(function(x){if(x.ok){O=x.j.orde
 $("lf").onsubmit=function(e){e.preventDefault();var v=$("lp").value;if(!v)return;try{sessionStorage.setItem("bz-pw",v)}catch(x){window.__pw=v}load()};
 $("tb").onclick=function(e){var b=e.target.closest("button");if(!b)return;mode=b.dataset.m;[].forEach.call(this.children,function(c){c.classList.toggle("on",c===b)});draw()};
 $("rf").onclick=function(){load().then(function(){toast("รีเฟรชแล้ว")})};
-$("ol").addEventListener("change",function(e){if(!e.target.matches("[data-s]"))return;var c=e.target.closest(".card"),id=c.dataset.id,st=e.target.value;api({action:"status",id:id,status:st}).then(function(x){if(x.ok){O.forEach(function(o){if(o.id==id)o.status=st});draw();toast("อัปเดตสถานะแล้ว")}else toast("บันทึกไม่สำเร็จ")})});
+$("ol").addEventListener("change",function(e){if(!e.target.matches("[data-s]"))return;var c=e.target.closest(".card"),id=c.dataset.id,st=e.target.value;api({action:"status",id:id,status:st}).then(function(x){if(x.ok){O.forEach(function(o){if(o.id==id)o.status=st});draw();toast(x.j.stock?"อัปเดตสถานะและสต็อกแล้ว":"อัปเดตสถานะแล้ว")}else toast("บันทึกไม่สำเร็จ")})});
 $("ol").addEventListener("click",function(e){var b=e.target.closest("[data-del]");if(!b)return;var id=b.closest(".card").dataset.id;if(!confirm("ลบออเดอร์นี้ถาวร?"))return;api({action:"delete",id:id}).then(function(x){if(x.ok){O=O.filter(function(o){return o.id!=id});draw();toast("ลบแล้ว")}else toast("ลบไม่สำเร็จ")})});
 if(PW())load();else $("lg").hidden=false;
 })();

@@ -28,4 +28,5 @@ ADMIN_PASSWORD=ตั้งเอง netlify dev     # เปิด http://local
 - ไม่มี build step; แก้ไฟล์ใน `public/` แล้ว push ขึ้น main ก็ deploy เอง
 - ทุกครั้งที่แก้ inline `<script>` ให้รัน `node --check` กับสคริปต์นั้น และทดสอบด้วย Playwright (route `/api/*`)
 - LINE `oaMessage` เด้งได้เฉพาะมือถือ/เครื่องที่มีแอป LINE — บนคอมใช้กล่องคัดลอกข้อความแทน
-- ยังไม่ทำ: ตัดสต็อกอัตโนมัติเมื่อสถานะ "ชำระแล้ว", แจ้งเตือนออเดอร์เข้า LINE ผ่าน Messaging API, ย้ายโดเมน bozomusic.com, ใส่ studioUrl (เว็บรับทำเพลง)
+- ตัดสต็อกอัตโนมัติ: `orders.mjs` action=status ตัดครั้งเดียวเมื่อเข้า paid/done (flag `stockCut`) และคืนเมื่อ cancel/new  ·  ระวัง: ถ้าแอดมินเปิดหน้า admin ค้างไว้นานแล้วกดเผยแพร่ จะทับสต็อกที่ระบบตัดไปแล้ว (ควรรีเฟรชก่อนแก้)
+- ยังไม่ทำ: แจ้งเตือนออเดอร์เข้า LINE ผ่าน Messaging API, ย้ายโดเมน bozomusic.com, ใส่ studioUrl (เว็บรับทำเพลง)

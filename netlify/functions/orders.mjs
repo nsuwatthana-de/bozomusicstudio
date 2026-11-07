@@ -97,9 +97,32 @@ export default async (req) => {
     if (b.action === "status" && STATUS.includes(b.status)) {
       const o = await store.get(b.id, { type: "json", consistency: "strong" });
       if (!o) return json({ error: "not_found" }, 404);
+      // ตัด/คืนสต็อกอัตโนมัติ: ตัดครั้งเดียวเมื่อออเดอร์เข้าสถานะ paid/done, คืนเมื่อยกเลิก
+      const wantCut = b.status === "paid" || b.status === "done";
+      let stock = null;
+      if (wantCut !== !!o.stockCut && (wantCut || b.status === "cancel" || b.status === "new")) {
+        const shop = await store.get("shop", { type: "json", consistency: "strong" });
+        if (shop && Array.isArray(shop.products)) {
+          const byId = new Map(shop.products.map((p) => [p.id, p]));
+          const sign = wantCut ? -1 : 1;
+          const move = (id, q) => {
+            const p = byId.get(id);
+            if (p && !p.set) p.s = Math.max(0, (+p.s || 0) + sign * q);
+          };
+          for (const it of o.items || []) {
+            const p = byId.get(it.id);
+            if (!p) continue;
+            if (p.set) (p.set || []).forEach((c) => move(c.id, (c.q || 1) * it.q));
+            else move(p.id, it.q);
+          }
+          await store.setJSON("shop", shop);
+          o.stockCut = wantCut;
+          stock = true;
+        }
+      }
       o.status = b.status;
       await store.setJSON(b.id, o);
-      return json({ ok: true });
+      return json({ ok: true, stock });
     }
     if (b.action === "delete") {
       await store.delete(b.id);
